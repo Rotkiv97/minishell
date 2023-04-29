@@ -5,7 +5,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(SRC)
 	@make -s -C libft
 	@gcc $(SRC) $(CFLAGS) -o $(NAME) -lreadline
 

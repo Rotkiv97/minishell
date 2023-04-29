@@ -15,9 +15,10 @@
 int	main(void)
 {
 	char	*input;
-	while(1)
-	{
-		input = readline("minishell>");
+
+	while (1)
+	{	
+		input = readline("\033[32mminishell$");
 		add_history(input);
 	}
 	return (0);
