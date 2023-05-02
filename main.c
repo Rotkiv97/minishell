@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:20 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/02 16:33:24 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:35:57 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
+
 	while (1)
 	{	
 		input = readline("\033[32mminishell>");
