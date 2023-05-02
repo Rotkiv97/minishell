@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/02 15:23:03 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/02 19:06:44 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct mshell
 {
 	char	**env;
 }				t_mshell;
+
+char	**split_quotes(char *s, t_mshell *msh);
 
 char	**copy_arrarr(char **arr);
 void	print_arrarr(char **arr);

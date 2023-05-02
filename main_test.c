@@ -1,29 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 18:48:20 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/02 19:16:18 by dcolucci         ###   ########.fr       */
+/*   Created: 2023/05/02 19:08:44 by dcolucci          #+#    #+#             */
+/*   Updated: 2023/05/02 19:19:08 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+int	main(void)
 {
-	char		*input;
-
-	(void)ac;
-	(void)av;
-	(void)env;
-
-	while (1)
-	{	
-		input = readline("\033[32mminishell>");
-		add_history(input);
-	}
-	return (0);
 }

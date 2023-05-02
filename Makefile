@@ -1,5 +1,6 @@
 NAME = minishell
-SRC = main.c sig_handler.c
+SRC = main.c sig_handler.c split_quotes.c
+SRC_TEST = main_test.c split_quotes.c
 UTILS = utils1.c
 LIB = ./libft/libft.a
 
@@ -10,6 +11,9 @@ all: $(NAME)
 $(NAME): $(SRC) $(UTILS)
 	@make -s -C libft
 	@gcc $(SRC) $(UTILS) $(CFLAGS) $(LIB) -o $(NAME) -lreadline
+
+test: $(SRC_TEST) $(UTILS)
+	@gcc $(SRC_TEST) $(UTILS) $(CFLAGS) $(LIB) -o $(NAME) -lreadline
 
 clean:
 	@make clean -s -C libft
