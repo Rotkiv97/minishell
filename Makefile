@@ -1,13 +1,15 @@
 NAME = minishell
-SRC = main.c
+SRC = main.c sig_handler.c
+UTILS = utils1.c
+LIB = ./libft/libft.a
 
 CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME): $(SRC)
+$(NAME): $(SRC) $(UTILS)
 	@make -s -C libft
-	@gcc $(SRC) $(CFLAGS) -o $(NAME) -lreadline
+	@gcc $(SRC) $(UTILS) $(CFLAGS) $(LIB) -o $(NAME) -lreadline
 
 clean:
 	@make clean -s -C libft
