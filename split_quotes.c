@@ -6,56 +6,85 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:38:52 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/02 19:08:17 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/04 19:06:49 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_even(char *trim, char quote)
+int	in_set(char c, char *s)
 {
-	int		i;
-	int		count;
+	int	i;
 
 	i = 0;
-	count = 0;
-	while (trim[i])
+	while (s[i])
 	{
-		if (trim[i] == quote)
-			count++;
+		if (s[i] == c)
+			return (1);
+		i++;
 	}
-	if (count % 2)
-		return (1);
 	return (0);
 }
 
-int	check_quotes(char *s, t_mshell *msh)
-{
-	int		i;
-	int		error;
-	char	*trim;
+/*
+	Finds next index; 
+	the string s on cell ind is not a quote at the start of the function.
+*/
 
+/*
+	Nelle parentesi chiuse posso non devo interpretare nulla.
+	Mi fermo quando, dopo aver trovato un numero pari di parentesi, trovo un carattere tra >, >>, <, <<, | oppure spazio??. (un trattino - ?)
+	Finche' non trovo uno di questi devo considerare la stringa ancora non terminata.
+
+	CORREZIONE : 
+	Considero una stringa ogni volta che si chiude una parentesi
+*/
+
+int	count_strings(char *s)
+{
+	int		strings;
+	int		i;
+
+	if (!s)
+		return (0);
 	i = 0;
-	error = 0;
-	trim = ft_strtrim(s, "\"\'");
-	if (trim[0] != trim[ft_strlen(trim) - 1])
-		error = 1;
-	if (trim[0] == '\"' && !check_even(trim, '\"'))
-		error = 1;
-	else if (trim[0] == '\'' && !check_even(trim, '\''))
-		error = 1;
-	free(trim);
-	return (error);
+	strings = 0;
+	while (s[i])
+	{
+		if (s[i] == '\"' || s[i] == '\'')
+		{
+			i = next_quote(s, i);
+			if (i == -1)
+				return (-1);
+			strings++;
+		}
+		else if (s[i] != ' ')
+		{
+			i = jump_string(s , i);
+		}
+		while (s[i] == ' ')
+			i++;
+		
+	}
+	return (strings);
 }
 
-char	**split_quotes(char *s, t_mshell *msh)
+char	**split_quotes(char *s)
 {
 	char	**split;
+	int		strings;
 
-	if (check_quotes(s, msh))
-		return (0);
-	split = malloc(sizeof(char **) * 2);
-	split[0] = ft_strtrim(s, "\'\"");
-	split[1] = 0;
+	split = 0;
+	/* if (check_quotes(s))
+		return (0); */
+	strings = count_strings(s);
+	(void)strings;
+	//split = malloc(sizeof(char **) * (strings + 1));
+	/* split = return_split();
+	if (error_split(split))
+	{
+		free_arrarr(split);
+		split = 0;
+	} */
 	return (split);
 }

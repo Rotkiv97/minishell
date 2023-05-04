@@ -1,44 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1.c                                           :+:      :+:    :+:   */
+/*   utils1_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 15:16:15 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/04 16:56:43 by dcolucci         ###   ########.fr       */
+/*   Created: 2023/05/04 15:41:44 by dcolucci          #+#    #+#             */
+/*   Updated: 2023/05/04 15:43:20 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**copy_arrarr(char **arr)
-{
-	int		i;
-	char	**cpy;
-
-	i = 0;
-	while (arr[i])
-		i++;
-	cpy = malloc(sizeof(char **) * (i + 1));
-	i = 0;
-	while (arr[i])
-	{
-		cpy[i] = ft_strdup(arr[i]);
-		i++;
-	}
-	cpy[i] = 0;
-	return (cpy);
-}
-
-void	print_arrarr(char **arr)
+void	free_arrarr(char **mat)
 {
 	int	i;
 
+	if (!mat)
+		return ;
 	i = 0;
-	while (arr[i])
-	{
-		printf("%s\n", arr[i]);
-		i++;
-	}
+	while (mat[i])
+		free(mat[i++]);
+	free(mat);
 }
