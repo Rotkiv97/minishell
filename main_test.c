@@ -6,24 +6,29 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:08:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/04 17:22:29 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:34:51 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	char	*s;
 	int		fd;
 
+	(void)ac;
+	(void)av;
 	fd = open("./test", O_RDONLY);
 	s = get_next_line(fd);
 	while (s)
 	{
-		printf("Numero stringhe of |%s->%d\n", s, count_strings(s));
+		printf("Numero stringhe of:%s>%d\n", s, count_strings(s));
+		print_arrarr(split_quotes(s));
+		printf("End split\n");
 		free(s);
 		s = get_next_line(fd);
 	}
-	free(s);
+	/* if (ac == 2)
+		printf("%s", getenv(av[1])); */
 }

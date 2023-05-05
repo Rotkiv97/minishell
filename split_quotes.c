@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:38:52 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/04 19:06:49 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:34:27 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,17 @@ int	in_set(char c, char *s)
 }
 
 /*
-	Finds next index; 
-	the string s on cell ind is not a quote at the start of the function.
+	It finds next index after the first quote. If there is no matching quote it returns -1; 
 */
+
+int	next_quote(char *s, int i, char q)
+{
+	while (s[i] && s[i] != q)
+		i++;
+	if (!s[i])
+		return (-1);
+	return (i + 1);
+}
 
 /*
 	Nelle parentesi chiuse posso non devo interpretare nulla.
@@ -45,28 +53,69 @@ int	count_strings(char *s)
 	int		strings;
 	int		i;
 
-	if (!s)
-		return (0);
 	i = 0;
 	strings = 0;
 	while (s[i])
 	{
-		if (s[i] == '\"' || s[i] == '\'')
+		while (s[i] && s[i] == ' ')
+			i++;
+		if (in_set(s[i], "\'\""))
 		{
-			i = next_quote(s, i);
+			i = next_quote(s, i + 1, s[i]);
 			if (i == -1)
-				return (-1);
+				return (0);
 			strings++;
 		}
-		else if (s[i] != ' ')
+		else if (s[i])
 		{
-			i = jump_string(s , i);
+			while (s[i] && !in_set(s[i], " \'\""))
+				i++;
+			strings++;
 		}
-		while (s[i] == ' ')
-			i++;
-		
 	}
 	return (strings);
+}
+
+char	**fill_split(char **split, char *s, int strings)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while (i < strings && s[j])
+	{
+		if (s[j] == ' ')
+		{
+			while (s[j] && s[j] == ' ')
+				j++;
+		}
+		else if (in_set(s[j], "\"\'"))
+		{
+			k = next_quote(s, j + 1, s[j]);
+			split[i] = (char *) malloc(sizeof(char) * (k - j + 1));
+			ft_strlcpy(split[i++], &s[j], (k - j + 1));
+			j = k;
+		}
+		else if (s[j])
+		{
+			k = j;
+			while (s[k] && !in_set(s[k], " \'\""))
+				k++;
+			split[i] = (char *) malloc(sizeof(char) * (k - j + 1));
+			ft_strlcpy(split[i++], &s[j], (k - j + 1));
+			j = k;
+		}
+	}
+	if (i != strings)
+	{
+		printf("i : %d and strings : %d \n", i, strings);
+		printf("cazzo!\n");
+	}
+	split[i] = 0;
+	return (split);
 }
 
 char	**split_quotes(char *s)
@@ -75,16 +124,10 @@ char	**split_quotes(char *s)
 	int		strings;
 
 	split = 0;
-	/* if (check_quotes(s))
-		return (0); */
 	strings = count_strings(s);
-	(void)strings;
-	//split = malloc(sizeof(char **) * (strings + 1));
-	/* split = return_split();
-	if (error_split(split))
-	{
-		free_arrarr(split);
-		split = 0;
-	} */
+	if (strings == 0)
+		return (0);
+	split = (char **) malloc(sizeof(char *) * (strings + 1));
+	split = fill_split(split, s, strings);
 	return (split);
 }
