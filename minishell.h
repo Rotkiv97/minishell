@@ -32,6 +32,9 @@ typedef struct mshell
 
 char	**split_quotes(char *s);
 int		count_strings(char *s);
+char	**ft_get_getenv(char **av);
+char	**ft_gest_ambiental(char **av);
+
 
 /*utils1.c*/
 
