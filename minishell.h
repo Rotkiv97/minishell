@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/05 16:04:05 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/07 19:43:40 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,14 @@ int		count_strings(char *s);
 
 char	**expand_vars(char **mat);
 
+/*trim_quotes.c*/
+
+char	**trim_quotes(char **exp);
+
 /*utils1.c*/
 
 char	**copy_arrarr(char **arr);
+int		in_set(char c, char *s);
 void	print_arrarr(char **arr);
 
 /*utils1_free.c*/

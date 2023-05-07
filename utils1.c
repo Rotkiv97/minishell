@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:16:15 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/05 17:37:27 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/07 19:09:15 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@ char	**copy_arrarr(char **arr)
 	}
 	cpy[i] = 0;
 	return (cpy);
+}
+
+int	in_set(char c, char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 void	print_arrarr(char **arr)

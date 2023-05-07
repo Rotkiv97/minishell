@@ -1,8 +1,8 @@
 NAME = minishell
 TEST = minishell_test
 
-SRC = main.c sig_handler.c split_quotes.c
-SRC_TEST = main_test.c split_quotes.c
+SRC = main.c sig_handler.c split_quotes.c trim_quotes.c
+SRC_TEST = main_test.c split_quotes.c trim_quotes.c
 
 UTILS = utils1.c utils1_free.c
 
