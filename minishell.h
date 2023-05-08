@@ -32,7 +32,6 @@ typedef struct mshell
 /*spit_quotes.c*/
 
 char	**split_quotes(char *s);
-int		count_strings(char *s);
 
 /*expand_vars.c*/
 
