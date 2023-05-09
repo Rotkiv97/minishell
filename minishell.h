@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/07 19:43:40 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:01:03 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef struct mshell
 	char	**env;
 }				t_mshell;
 
+/*split_command.c*/
+
+int		count_sep(char *s, char *set);
+char	**nano_split_cmd(char *exp);
+char	**split_cmd(char **exp);
+
 /*spit_quotes.c*/
 
 char	**split_quotes(char *s);
@@ -41,10 +47,15 @@ char	**expand_vars(char **mat);
 
 char	**trim_quotes(char **exp);
 
+/*final_split.c*/
+
+char	**final_split(char *input);
+
 /*utils1.c*/
 
-char	**copy_arrarr(char **arr);
 int		in_set(char c, char *s);
+char	*find_next_char(char *str, char *set, int i);
+char	**copy_arrarr(char **arr);
 void	print_arrarr(char **arr);
 
 /*utils1_free.c*/

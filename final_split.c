@@ -1,43 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   trim_quotes.c                                      :+:      :+:    :+:   */
+/*   final_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/07 19:04:53 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/09 17:18:22 by dcolucci         ###   ########.fr       */
+/*   Created: 2023/05/09 19:56:18 by dcolucci          #+#    #+#             */
+/*   Updated: 2023/05/09 20:05:00 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*delete_quotes(char *to_trim, char quote)
+char	**final_split(char *input)
 {
-	char	*trim;
-	char	*tmp;
-	char	q[2];
+	char	**final;
 
-	tmp = to_trim;
-	q[0] = quote;
-	q[1] = '\0';
-	trim = ft_strtrim(to_trim, q);
-	free(tmp);
-	return (trim);
-}
-
-char	**trim_quotes(char **exp)
-{
-	int		i;
-
-	i = 0;
-	if (!exp)
-		return (0);
-	while (exp[i])
-	{
-		if (in_set(exp[i][0], "\'\""))
-			exp[i] = delete_quotes(exp[i], exp[i][0]);
-		i++;
-	}
-	return (exp);
+	final = split_quotes(input);
+	printf("quotes_split:\n");
+	print_arrarr(final);
+	final = split_cmd(final);
+	printf("cmd_split:\n");
+	print_arrarr(final);
+	final = trim_quotes(final);
+	printf("trim_split:\n");
+	print_arrarr(final);
+	return (final);
 }

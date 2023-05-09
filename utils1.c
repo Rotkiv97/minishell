@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:16:15 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/07 19:09:15 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:55:34 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,21 @@ int	in_set(char c, char *s)
 	return (0);
 }
 
+char	*find_next_char(char *str, char *set, int i)
+{
+	if (!str || !set)
+		return (0);
+	if ((ft_strlen(str) - 1 < (size_t)i) || !ft_strlen(set))
+		return (0);
+	while (str[i])
+	{
+		if (in_set(str[i], set))
+			return (&str[i]);
+		i++;
+	}
+	return (0);
+}
+
 void	print_arrarr(char **arr)
 {
 	int	i;
@@ -61,7 +76,10 @@ void	print_arrarr(char **arr)
 	}
 	while (arr[i])
 	{
-		printf("%s\n", arr[i]);
+		if (!arr[i])
+			printf("Line %d is null\n", i);
+		else
+			printf("%s\n", arr[i]);
 		i++;
 	}
 }

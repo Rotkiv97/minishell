@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:08:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/07 21:04:24 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:56:01 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int	main(int ac, char **av)
 	} */
 	/* if (ac == 2)
 		printf("%s", getenv(av[1])); */
-	char	*input;
+
+	
+/* 	char	*input;
 	char	**split;
 
 	(void)ac;
@@ -53,5 +55,16 @@ int	main(int ac, char **av)
 		printf("\033[0;32mTrimmed split\033[0m\n");
 		print_arrarr(split);
 		free(split);
+	} */
+	
+	char	*input;
+
+	(void)ac;
+	(void)av;
+	while (1)
+	{
+		input = readline("minishell>");
+		print_arrarr(final_split(input));
 	}
+	
 }
