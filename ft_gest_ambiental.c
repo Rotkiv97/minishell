@@ -10,21 +10,49 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-void ft_check_ambiental(char **av)
+
+char *ft_sub_dollar(char *av, char *envp, int i , int k)
 {
 	int x;
-	int y;
-
-	x = 1;
-	y = 0;
-	if(av[x][y] == 92 && av[x][y + 1] == 36)
+	x = 0;
+	while (envp[x])
 	{
-		printf("$%s", *av);
+		printf("%s\n", envp);
+		x++;
 	}
+	return(av);
 }
 
+char *ft_expander(char *av, char **envp)
+{
+	char *separator;
+	int i = 0;
+	int k = 0;
+	int x = 0;
 
-char **ft_get_getenv(char **av)
+	separator = "<>\\/|+-.,;:~{}[]()&%%^#@'?* ";
+	while(av[i])
+	{
+		if(av[i] == '$')
+		{
+			k =  i + 1;
+			while(!ft_strchr(separator, av[k]) || av[k] != '\0')
+				k++;
+			while(envp[x])
+			{
+				int l = 0;
+				if(!ft_strncmp(&av[i + 1], envp[x] , k - i - 1))
+					av = ft_sub_dollar(av, envp[x], i, k);
+				x++;
+			}
+
+		}
+		i++;
+	}
+	return(av);
+}
+
+/* char **ft_get_getenv(char **av)
 {
 	const char *separator;
 	int k;
@@ -33,15 +61,10 @@ char **ft_get_getenv(char **av)
 
 	k = 0;
 	y = 0;
-	x = 1; 
+	x = 0; 
 	separator = '\0';
 	separator = "<>\\/|+-.,;:~{}[]()&%%^#@'?*";
-	//
-/* 	if(av[x][y] == 36 && av[x][y - 1] == 92)
-	{
-		
-	} */
-	if(av[x][y] == 36 && av[x][y - 1] != 92)
+	if(av[x][y] == '$')
 	{
 		k = y;
 		while(av[x][k] != ' ' && av[x][k] != '\0')
@@ -52,33 +75,27 @@ char **ft_get_getenv(char **av)
 		if(av[x][y] == separator[y])
 			printf("%c", av[x][y]);			
 	}
-	
 	return(av);
 }
-
-char **ft_gest_ambiental(char **av)
+ */
+char **ft_gest_ambiental(char **av, char **envp)
 {
-	int y;
 	int x;
 
-	y = 0;
-	x = 1;
-	int i = 1;
+
+	x = 0;
 	while(av[x])
 	{
-		if(av[x][0] == 34 || av[x][0] != 39)
+		if(av[x][0] == '\"' || av[x][0] != '\'')
 		{
-			while(av[x][y] && av[x][y] != '$')
-				y++;
-			av = ft_get_getenv(av);
-			y = 0;	
+			av[x] = ft_expander(av[x], envp);
+			//ft_get_getenv(av);	
 		}
-		i = 1;
-		while(av[i])
+		/* while(av[i])
 		{
 			printf("%s", av[i]);
 			i++;
-		}
+		} */
 		x++;
 	}
 	return(av);

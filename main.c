@@ -12,12 +12,25 @@
 
 #include "minishell.h"
 
-int	main (int ac, char **av)
+int	main (int ac, char **av, char **anvp)
 {
-	if (ac == 2)
+	(void)ac;
+	(void)av;
+	(void)anvp;
+	char *input;
+	char **str;
+	
+
+	//printf("%s", *anvp);
+	//ft_gest_ambiental(anvp);
+ 	while(1)
 	{
-		av = ft_gest_ambiental(av);
-	}	
-	printf("\n");
-	return (0);
+		input = readline("\033[32mminishell>$  \033[37m");
+		str = split_quotes(input);
+		str = ft_gest_ambiental(split_quotes(input), anvp);
+		print_arrarr(split_quotes(input));
+		//print_arrarr(anvp);
+		add_history(input);
+	}
+	str =str;
 }

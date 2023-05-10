@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC = main.c ft_gest_ambiental.c
+SRC = main.c ft_gest_ambiental.c split_quotes.c
 SRC_TEST = main_test.c split_quotes.c
 
 UTILS = utils1.c utils1_free.c
