@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:08:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/09 19:56:01 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:11:57 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ int	main(int ac, char **av)
 	{
 		input = readline("minishell>");
 		print_arrarr(final_split(input));
+		add_history(input);
 	}
 	
 }
+
+/* "ciaoc comea va $PWD ciao $USER" */

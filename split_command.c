@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:12:34 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/09 20:13:45 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:09:08 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ char	**join_split(char **cmd, char **line_spl)
 	i = 0;
 	while (line_spl[i])
 	{
-		join[k] = ft_strdup(line_spl[k]);
+		join[k] = ft_strdup(line_spl[i]);
+		i++;
 		k++;
 	}
 	join[k] = 0;
