@@ -6,13 +6,13 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:08:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/10 14:11:57 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/11 18:22:04 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
 /* 	char	*s;
 	int		fd;
@@ -58,16 +58,19 @@ int	main(int ac, char **av)
 	} */
 	
 	char	*input;
+	char	**fin;
 
 	(void)ac;
 	(void)av;
 	while (1)
 	{
-		input = readline("minishell>");
-		print_arrarr(final_split(input));
+		input = readline("\033[34mminishell>\033[0m");
+		fin = final_split(input, envp);
+		print_arrarr(fin);
+		free_arrarr(fin);
 		add_history(input);
 	}
-	
+
 }
 
 /* "ciaoc comea va $PWD ciao $USER" */
