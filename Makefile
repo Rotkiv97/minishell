@@ -8,7 +8,7 @@ UTILS = utils1.c utils1_free.c
 LIB = ./libft/libft.a
 GNL = ./gnl/get_next_line_utils_bonus.c ./gnl/get_next_line_bonus.c
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 all: $(NAME)
 

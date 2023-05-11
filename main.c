@@ -14,11 +14,13 @@
 
 int	main (int ac, char **av, char **anvp)
 {
+
 	(void)ac;
 	(void)av;
 	(void)anvp;
 	char *input;
 	char **str;
+	char **spl;
 	
 
 	//printf("%s", *anvp);
@@ -26,11 +28,15 @@ int	main (int ac, char **av, char **anvp)
  	while(1)
 	{
 		input = readline("\033[32mminishell>$  \033[37m");
-		str = split_quotes(input);
-		str = ft_gest_ambiental(split_quotes(input), anvp);
+		spl = split_quotes(input);
 		print_arrarr(split_quotes(input));
+		str = ft_gest_ambiental(spl, anvp);
+		printf("\033[33mcopy----------: \n");
+		print_arrarr(str);
 		//print_arrarr(anvp);
 		add_history(input);
+		free_arrarr(str);
+		free(input);
 	}
 	str =str;
 }
