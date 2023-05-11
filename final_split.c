@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   final_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 18:48:20 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/10 11:41:09 by dcolucci         ###   ########.fr       */
+/*   Created: 2023/05/09 19:56:18 by dcolucci          #+#    #+#             */
+/*   Updated: 2023/05/10 14:11:10 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+char	**final_split(char *input)
 {
-	char		*input;
+	char	**final;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
-	{	
-		input = readline("\033[32mminishell>\033[0m");
-		print_arrarr(split_quotes(input));
-		add_history(input);
-	}
-	return (0);
+	final = split_quotes(input);
+	final = split_cmd(final);
+	final = trim_quotes(final);
+	return (final);
 }

@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils1_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 18:48:20 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/10 11:41:09 by dcolucci         ###   ########.fr       */
+/*   Created: 2023/05/04 15:41:44 by dcolucci          #+#    #+#             */
+/*   Updated: 2023/05/05 17:35:32 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+void	free_arrarr(char **mat)
 {
-	char		*input;
+	int	i;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
-	{	
-		input = readline("\033[32mminishell>\033[0m");
-		print_arrarr(split_quotes(input));
-		add_history(input);
-	}
-	return (0);
+	if (!mat)
+		return ;
+	i = 0;
+	while (mat[i])
+		free(mat[i++]);
+	free(mat);
 }
