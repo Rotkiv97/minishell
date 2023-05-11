@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:38:52 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/09 20:04:36 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:42:37 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,6 @@ char	**fill_split(char **split, char *s, int strings)
 			ft_strlcpy(split[i++], &s[j], (k - j + 1));
 			j = k;
 		}
-	}
-	if (i != strings)
-	{
-		printf("i : %d and strings : %d \n", i, strings);
-		printf("cazzo!\n");
 	}
 	split[i] = 0;
 	return (split);
