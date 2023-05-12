@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/11 18:20:49 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 19:22:54 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ char	**final_split(char *input, char **envp);
 int		in_set(char c, char *s);
 char	*find_next_char(char *str, char *set, int i);
 char	**copy_arrarr(char **arr);
+int		compare_env(char *env, char *av, int k);
+
+/*utils_print.c*/
+
 void	print_arrarr(char **arr);
 
 /*utils1_free.c*/

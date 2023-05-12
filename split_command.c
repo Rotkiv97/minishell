@@ -6,13 +6,13 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:12:34 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/11 17:44:28 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 18:06:28 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_sep(char *s, char *set)
+int	count_sep_cmd(char *s, char *set)
 {
 	int	i;
 	int	count;
@@ -43,21 +43,16 @@ void	fill_nano(char **nano, char *exp, char *set)
 	int	i;
 	int	j;
 	int	k;
-	int	sep;
 
 	i = 0;
 	j = 0;
 	k = 0;
-	sep = count_sep(exp, set);
-	while (exp[i] && k < sep)
+	while (exp[i] && k < count_sep_cmd(exp, set))
 	{
 		if (in_set(exp[i], set))
 		{
 			nano[k] = (char *) malloc (sizeof (char) * 2);
-			nano[k][0] = exp[i];
-			nano[k][1] = '\0';
-			k++;
-			i++;
+			ft_strlcpy(nano[k++], &exp[i++], 2);
 		}
 		else
 		{
@@ -65,8 +60,7 @@ void	fill_nano(char **nano, char *exp, char *set)
 			while (exp[j] && !in_set(exp[j], set))
 				j++;
 			nano[k] = malloc (sizeof(char) * (j - i + 1));
-			ft_strlcpy(nano[k], &exp[i], (j - i + 1));
-			k++;
+			ft_strlcpy(nano[k++], &exp[i], (j - i + 1));
 			i = j;
 		}
 	}
@@ -85,7 +79,7 @@ char	**nano_split_cmd(char *exp)
 		nano[1] = 0;
 		return (nano);
 	}
-	sep = count_sep(exp, "<>|");
+	sep = count_sep_cmd(exp, "<>|");
 	nano = (char **) malloc (sizeof(char *) * (sep + 1));
 	fill_nano(nano, exp, "<>|");
 	return (nano);
@@ -96,11 +90,9 @@ char	**join_split(char **cmd, char **line_spl)
 	char	**join;
 	int		i;
 	int		j;
-	int		k;
 
 	i = 0;
 	j = 0;
-	k = 0;
 	if (!cmd)
 		return (line_spl);
 	while (cmd[i])
@@ -108,15 +100,14 @@ char	**join_split(char **cmd, char **line_spl)
 	while (line_spl[j])
 		j++;
 	join = (char **) malloc (sizeof(char *) * (i + j + 1));
-	while (cmd[k])
-	{
-		join[k] = ft_strdup(cmd[k]);
-		k++;
-	}
+	i = 0;
+	j = 0;
+	while (cmd[i])
+		join[j++] = ft_strdup(cmd[i++]);
 	i = 0;
 	while (line_spl[i])
-		join[k++] = ft_strdup(line_spl[i++]);
-	join[k] = 0;
+		join[j++] = ft_strdup(line_spl[i++]);
+	join[j] = 0;
 	free_arrarr(cmd);
 	free_arrarr(line_spl);
 	return (join);

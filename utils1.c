@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:16:15 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/09 19:55:34 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 19:27:43 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,19 @@ char	*find_next_char(char *str, char *set, int i)
 	return (0);
 }
 
-void	print_arrarr(char **arr)
+int	max(int i, int j)
 {
-	int	i;
+	if (i > j)
+		return (i);
+	return (j);
+}
 
-	i = 0;
-	if (!arr)
-	{
-		printf("No arrarr\n");
-		return ;
-	}
-	while (arr[i])
-	{
-		if (!arr[i])
-			printf("Line %d is null\n", i);
-		else
-			printf("%s\n", arr[i]);
-		i++;
-	}
+int	compare_env(char *env, char *av, int k)
+{
+	int	x;
+
+	x = 0;
+	while (env[x] && env[x] != '=')
+		x++;
+	return (ft_strncmp(env, av, max(k - 1, x)));
 }

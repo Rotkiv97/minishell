@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:38:52 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/11 17:42:37 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:00:56 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,35 @@ int	count_strings(char *s)
 	return (strings);
 }
 
+int	fill_line(char **line, char *s, int j)
+{
+	int	k;
+
+	k = 0;
+	if (in_set(s[j], "\"\'"))
+	{
+		k = next_quote(s, j + 1, s[j]);
+		*line = (char *) malloc(sizeof(char) * (k - j + 1));
+		ft_strlcpy(*line, &s[j], (k - j + 1));
+	}
+	else if (s[j])
+	{
+		k = j;
+		while (s[k] && !in_set(s[k], " \'\""))
+			k++;
+		*line = (char *) malloc(sizeof(char) * (k - j + 1));
+		ft_strlcpy(*line, &s[j], (k - j + 1));
+	}
+	return (k);
+}
+
 char	**fill_split(char **split, char *s, int strings)
 {
 	int	i;
 	int	j;
-	int	k;
 
 	i = 0;
 	j = 0;
-	k = 0;
 	while (i < strings && s[j])
 	{
 		if (s[j] == ' ')
@@ -79,21 +99,9 @@ char	**fill_split(char **split, char *s, int strings)
 				j++;
 		}
 		else if (in_set(s[j], "\"\'"))
-		{
-			k = next_quote(s, j + 1, s[j]);
-			split[i] = (char *) malloc(sizeof(char) * (k - j + 1));
-			ft_strlcpy(split[i++], &s[j], (k - j + 1));
-			j = k;
-		}
+			j = fill_line(&split[i++], s, j);
 		else if (s[j])
-		{
-			k = j;
-			while (s[k] && !in_set(s[k], " \'\""))
-				k++;
-			split[i] = (char *) malloc(sizeof(char) * (k - j + 1));
-			ft_strlcpy(split[i++], &s[j], (k - j + 1));
-			j = k;
-		}
+			j = fill_line(&split[i++], s, j);
 	}
 	split[i] = 0;
 	return (split);

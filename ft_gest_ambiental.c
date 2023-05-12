@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_gest_ambiental.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vguidoni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:13:45 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/05/06 10:13:54 by vguidoni         ###   ########.fr       */
+/*   Updated: 2023/05/12 19:22:58 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*ft_sub_dollar(char *av, char *envp, int i, int k)
@@ -50,42 +51,45 @@ char	*ft_rm_exp(char *av, int i, int k)
 	return (join);
 }
 
-char	*ft_expander(char *av, char **envp)
+char	*ft_av(char **envp, char *av, int i, int *flag)
 {
-	char	*separator;
-	int		i;
 	int		k;
 	int		x;
+	char	*separator;
+
+	separator = "<>\\/|+-.,;:~{}[]()&%%\"^'#@?*$ ";
+	x = 0;
+	k = i + 1;
+	while (!ft_strchr(separator, av[k]) && av[k] != '\0')
+		k++;
+	while (envp[x])
+	{
+		if (!compare_env(envp[x], &av[i + 1], k))
+		{
+			av = ft_sub_dollar(av, envp[x], i, k);
+			*flag = 1;
+		}
+		x++;
+	}
+	if (*flag == 0)
+		av = ft_rm_exp(av, i, k);
+	return (av);
+}
+
+char	*ft_expander(char *av, char **envp)
+{
+	int		i;
 	int		flag;
 
 	i = 0;
-	k = 0;
-	x = 0;
-	separator = "<>\\/|+-.,;:~{}[]()&%%\"^'#@?*$ ";
+	flag = 0;
 	while (av[i])
 	{
 		if (av[i] == '$')
 		{
-			k = i + 1;
-			flag = 0;
-			while (!ft_strchr(separator, av[k]) && av[k] != '\0')
-				k++;
-			while (envp[x])
-			{
-				if (!ft_strncmp(&av[i + 1], envp[x], k - i - 1)
-					&& (k - i - 1) > 0)
-				{
-					av = ft_sub_dollar(av, envp[x], i, k);
-					flag = 1;
-				}
-				x++;
-			}
+			av = ft_av(envp, av, i, &flag);
 			if (flag == 0)
-			{
-				av = ft_rm_exp(av, i, k);
 				i--;
-			}
-			x = 0;
 		}
 		i++;
 	}
