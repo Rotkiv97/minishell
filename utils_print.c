@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1_free.c                                      :+:      :+:    :+:   */
+/*   utils_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 15:41:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/05 17:35:32 by dcolucci         ###   ########.fr       */
+/*   Created: 2023/05/12 19:04:05 by dcolucci          #+#    #+#             */
+/*   Updated: 2023/05/12 19:05:11 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_arrarr(char **mat)
+void	print_arrarr(char **arr)
 {
 	int	i;
 
-	if (!mat)
-		return ;
 	i = 0;
-	while (mat[i])
-		free(mat[i++]);
-	free(mat);
+	if (!arr)
+	{
+		printf("No arrarr\n");
+		return ;
+	}
+	while (arr[i])
+	{
+		if (!arr[i])
+			printf("Line %d is null\n", i);
+		else
+			printf("%s\n", arr[i]);
+		i++;
+	}
 }

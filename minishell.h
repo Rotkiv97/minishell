@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/09 20:01:03 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 20:05:17 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ char	**split_cmd(char **exp);
 
 char	**split_quotes(char *s);
 
+/*ft_gest_ambiental.c*/
+
+char	**ft_gest_ambiental(char **spl, char **envp);
+
 /*expand_vars.c*/
 
 char	**expand_vars(char **mat);
@@ -49,13 +53,17 @@ char	**trim_quotes(char **exp);
 
 /*final_split.c*/
 
-char	**final_split(char *input);
+char	**final_split(char *input, char **envp);
 
 /*utils1.c*/
 
 int		in_set(char c, char *s);
 char	*find_next_char(char *str, char *set, int i);
 char	**copy_arrarr(char **arr);
+int		compare_env(char *env, char *av, int k);
+
+/*utils_print.c*/
+
 void	print_arrarr(char **arr);
 
 /*utils1_free.c*/

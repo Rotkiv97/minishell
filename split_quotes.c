@@ -6,14 +6,14 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:38:52 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/09 20:04:36 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 20:05:38 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	It finds next index after the first quote. If there is no matching quote it returns -1; 
+/*It finds next index after the first quote. 
+If there is no matching quote it returns -1; 
 */
 
 int	next_quote(char *s, int i, char q)
@@ -25,13 +25,13 @@ int	next_quote(char *s, int i, char q)
 	return (i + 1);
 }
 
-/*
-	Nelle parentesi chiuse posso non devo interpretare nulla.
-	Mi fermo quando, dopo aver trovato un numero pari di parentesi, trovo un carattere tra >, >>, <, <<, | oppure spazio??. (un trattino - ?)
-	Finche' non trovo uno di questi devo considerare la stringa ancora non terminata.
+/*Nelle parentesi chiuse posso non devo interpretare nulla.
+Mi fermo quando, dopo aver trovato un numero pari di parentesi,
+trovo un carattere tra >, >>, <, <<, | oppure spazio??. (un trattino - ?)
+Finche' non trovo uno di questi devo considerare la stringa ancora non terminata.
 
-	CORREZIONE : 
-	Considero una stringa ogni volta che si chiude una parentesi
+CORREZIONE : 
+Considero una stringa ogni volta che si chiude una parentesi
 */
 
 int	count_strings(char *s)
@@ -62,15 +62,35 @@ int	count_strings(char *s)
 	return (strings);
 }
 
+int	fill_line(char **line, char *s, int j)
+{
+	int	k;
+
+	k = 0;
+	if (in_set(s[j], "\"\'"))
+	{
+		k = next_quote(s, j + 1, s[j]);
+		*line = (char *) malloc(sizeof(char) * (k - j + 1));
+		ft_strlcpy(*line, &s[j], (k - j + 1));
+	}
+	else if (s[j])
+	{
+		k = j;
+		while (s[k] && !in_set(s[k], " \'\""))
+			k++;
+		*line = (char *) malloc(sizeof(char) * (k - j + 1));
+		ft_strlcpy(*line, &s[j], (k - j + 1));
+	}
+	return (k);
+}
+
 char	**fill_split(char **split, char *s, int strings)
 {
 	int	i;
 	int	j;
-	int	k;
 
 	i = 0;
 	j = 0;
-	k = 0;
 	while (i < strings && s[j])
 	{
 		if (s[j] == ' ')
@@ -79,30 +99,23 @@ char	**fill_split(char **split, char *s, int strings)
 				j++;
 		}
 		else if (in_set(s[j], "\"\'"))
-		{
-			k = next_quote(s, j + 1, s[j]);
-			split[i] = (char *) malloc(sizeof(char) * (k - j + 1));
-			ft_strlcpy(split[i++], &s[j], (k - j + 1));
-			j = k;
-		}
+			j = fill_line(&split[i++], s, j);
 		else if (s[j])
-		{
-			k = j;
-			while (s[k] && !in_set(s[k], " \'\""))
-				k++;
-			split[i] = (char *) malloc(sizeof(char) * (k - j + 1));
-			ft_strlcpy(split[i++], &s[j], (k - j + 1));
-			j = k;
-		}
-	}
-	if (i != strings)
-	{
-		printf("i : %d and strings : %d \n", i, strings);
-		printf("cazzo!\n");
+			j = fill_line(&split[i++], s, j);
 	}
 	split[i] = 0;
 	return (split);
 }
+
+/*
+	Description:
+		The split_quotes function takes a string s and splits it into
+		multiple strings separated by spaces; strings in double and single
+		closed quotes are considered a single string.
+	Return value:
+		It returns a NULL-terminated double char pointer with all the splitted strings.
+		When quotes are not closed or when s is NULL it returns a NULL pointer.
+*/
 
 char	**split_quotes(char *s)
 {
@@ -110,6 +123,8 @@ char	**split_quotes(char *s)
 	int		strings;
 
 	split = 0;
+	if (!s)
+		reiturn (0);
 	strings = count_strings(s);
 	if (strings == 0)
 		return (0);
