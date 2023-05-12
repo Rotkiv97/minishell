@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:38:52 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/12 17:00:56 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 19:49:11 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,24 @@ char	**fill_split(char **split, char *s, int strings)
 	return (split);
 }
 
+/*
+	Description:
+		The split_quotes function takes a string s and splits it into
+		multiple strings separated by spaces; strings in double and single
+		closed quotes are considered a single string.
+	Return value:
+		It returns a NULL-terminated double char pointer with all the splitted strings.
+		When quotes are not closed or when s is NULL it returns a NULL pointer.
+*/
+
 char	**split_quotes(char *s)
 {
 	char	**split;
 	int		strings;
 
 	split = 0;
+	if (!s)
+		reiturn (0);
 	strings = count_strings(s);
 	if (strings == 0)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:04:53 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/09 17:18:22 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 19:50:57 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ char	*delete_quotes(char *to_trim, char quote)
 	free(tmp);
 	return (trim);
 }
+
+/*
+	Description:
+		The function trim_quotes modify every string of 
+		double char pointer exp trimming the quotes at the start
+		and at the end of the string.
+	Return value:
+		It returns the same address of exp but the strings are modified.
+*/
 
 char	**trim_quotes(char **exp)
 {

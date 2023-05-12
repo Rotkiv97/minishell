@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:12:34 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/12 18:06:28 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 19:45:23 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,15 @@ char	**join_split(char **cmd, char **line_spl)
 	free_arrarr(line_spl);
 	return (join);
 }
+
+/*
+	Description :
+		split_cmd function split every string of the exp double 
+		char pointer with the separators set equals to "<>|".
+	Return Value :
+		It returns a double char pointer where every char in separators set "<>|"
+		are splitted in single strings.
+*/
 
 char	**split_cmd(char **exp)
 {

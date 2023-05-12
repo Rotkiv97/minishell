@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:13:45 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/05/12 19:22:58 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 19:55:17 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,18 @@ char	*ft_expander(char *av, char **envp)
 	}
 	return (av);
 }
+
+/*
+	Description:
+		The function ft_gest_ambiental expand every $ variable in every string
+		of av starting with double quotes (") or not starting with single quotes
+		(');
+	Return value:
+		It returns a double char pointer with the $variable replaced 
+		by its corresponding environment variable.
+		If no variable is found the $xxx character (not in separators set) 
+		are removed from the string.
+*/
 
 char	**ft_gest_ambiental(char **av, char **envp)
 {
