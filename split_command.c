@@ -91,7 +91,6 @@ char	**nano_split_cmd(char *exp)
 	return (nano);
 }
 
-
 char	**join_split(char **cmd, char **line_spl)
 {
 	char	**join;
@@ -131,6 +130,8 @@ char	**split_cmd(char **exp)
 
 	x = 0;
 	split_cmd = 0;
+	if (exp == NULL)
+		return (NULL);
 	while (exp[x])
 	{
 		line_spl = nano_split_cmd(exp[x]);

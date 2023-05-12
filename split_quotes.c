@@ -12,8 +12,8 @@
 
 #include "minishell.h"
 
-/*
-	It finds next index after the first quote. If there is no matching quote it returns -1; 
+/*It finds next index after the first quote. 
+If there is no matching quote it returns -1; 
 */
 
 int	next_quote(char *s, int i, char q)
@@ -25,13 +25,13 @@ int	next_quote(char *s, int i, char q)
 	return (i + 1);
 }
 
-/*
-	Nelle parentesi chiuse posso non devo interpretare nulla.
-	Mi fermo quando, dopo aver trovato un numero pari di parentesi, trovo un carattere tra >, >>, <, <<, | oppure spazio??. (un trattino - ?)
-	Finche' non trovo uno di questi devo considerare la stringa ancora non terminata.
+/*Nelle parentesi chiuse posso non devo interpretare nulla.
+Mi fermo quando, dopo aver trovato un numero pari di parentesi,
+trovo un carattere tra >, >>, <, <<, | oppure spazio??. (un trattino - ?)
+Finche' non trovo uno di questi devo considerare la stringa ancora non terminata.
 
-	CORREZIONE : 
-	Considero una stringa ogni volta che si chiude una parentesi
+CORREZIONE : 
+Considero una stringa ogni volta che si chiude una parentesi
 */
 
 int	count_strings(char *s)

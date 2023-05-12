@@ -66,6 +66,4 @@ void	print_arrarr(char **arr);
 
 void	free_arrarr(char **mat);
 
-
-
 #endif

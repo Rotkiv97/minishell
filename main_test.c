@@ -14,6 +14,20 @@
 
 int	main(int ac, char **av, char **envp)
 {
+	char	*input;
+	char	**fin;
+
+	(void)ac;
+	(void)av;
+	while (1)
+	{
+		input = readline("\033[34mminishell>\033[0m");
+		fin = final_split(input, envp);
+		print_arrarr(fin);
+		free_arrarr(fin);
+		add_history(input);
+	}
+}
 /* 	char	*s;
 	int		fd;
 	char	**split;
@@ -37,8 +51,6 @@ int	main(int ac, char **av, char **envp)
 	} */
 	/* if (ac == 2)
 		printf("%s", getenv(av[1])); */
-
-	
 /* 	char	*input;
 	char	**split;
 
@@ -56,21 +68,5 @@ int	main(int ac, char **av, char **envp)
 		print_arrarr(split);
 		free(split);
 	} */
-	
-	char	*input;
-	char	**fin;
-
-	(void)ac;
-	(void)av;
-	while (1)
-	{
-		input = readline("\033[34mminishell>\033[0m");
-		fin = final_split(input, envp);
-		print_arrarr(fin);
-		free_arrarr(fin);
-		add_history(input);
-	}
-
-}
 
 /* "ciaoc comea va $PWD ciao $USER" */
