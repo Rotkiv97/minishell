@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vguidoni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 17:58:07 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/05/14 17:58:12 by vguidoni         ###   ########.fr       */
+/*   Updated: 2023/05/14 21:04:15 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,18 @@
 
 t_list	*ft_new_cmd(char **full_cmds, int x, int y)
 {
-	t_mshell	*shell;
-	shell->fill_cmds = malloc(sizeof(t_mshell));
-	
+	t_node	*node;
+	t_list	*new;
+	char	**sub_cmd;
 
+	node = (t_node *) malloc (sizeof(t_node));
+	sub_cmd = ft_subsplit(full_cmds, x, y);
+	node->infile = ft_infile();
+	node->outfile = ft_outfile();
+	node->full_cmd = ft_full_cmd();
+	node->cmds = ft_full_cmd();
+	new = ft_lstnew();
+	return (new);
 }
 
 t_list	*ft_create_cmds(char **full_cmds)
@@ -31,15 +39,15 @@ t_list	*ft_create_cmds(char **full_cmds)
 	y = 0;
 	if (full_cmds == NULL)
 		return (NULL);
-	while(full_cmds[x])
+	while (full_cmds[x])
 	{
-		if(full_cmds[x][0] == '|')
+		if (full_cmds[x][0] == '|')
 		{
-        	new = ft_new_cmd(full_cmds, x, y);
-        	y = x;
+			new = ft_new_cmd(full_cmds, x, y);
+			y = x;
 		}
 		x++;
 	}
 	new = ft_new_cmd(fulls_cmds, x, y);
-	return (cmds)
+	return (cmds);
 }

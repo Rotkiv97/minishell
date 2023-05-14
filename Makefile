@@ -1,15 +1,16 @@
-NAME = minishell
-TEST = minishell_test
+NAME =		minishell
+TEST =		minishell_test
 
-SRC = main.c sig_handler.c split_quotes.c trim_quotes.c split_command.c
-SRC_TEST = main_test.c split_quotes.c trim_quotes.c split_command.c  final_split.c ft_gest_ambiental.c
+SRC =		main.c sig_handler.c split_quotes.c trim_quotes.c split_command.c
+SRC_TEST =	main_test.c split_quotes.c trim_quotes.c split_command.c  final_split.c ft_gest_ambiental.c \
+			ft_create_cmds.c
 
-UTILS = utils1.c utils1_free.c utils_print.c
+UTILS =		utils1.c utils2.c utils1_free.c utils_print.c 
 
-LIB = ./libft/libft.a
-GNL = ./gnl/get_next_line_utils_bonus.c ./gnl/get_next_line_bonus.c
+LIB =		./libft/libft.a
+GNL =		./gnl/get_next_line_utils_bonus.c ./gnl/get_next_line_bonus.c
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS =	-Wall -Werror -Wextra -g
 
 all: $(NAME)
 

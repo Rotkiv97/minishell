@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/12 20:05:17 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/14 21:07:05 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,21 @@
 
 //int g_status;
 
-typedef struct s_pront
+typedef struct s_sh
 {
-	t_list *cmds;
+	t_list	*cmds;
 	char	**envp;
 	pid_t	pid;
-}	t_pront;
+}t_sh;
 
 
-typedef struct s_mshell
+typedef struct s_node
 {
 	char	**full_cmd;
 	char	*cmds;
 	int		infile;
 	int		outfile;
-}				t_mshell;
+}t_node;
 
 /*split_command.c*/
 
@@ -74,6 +74,11 @@ int		in_set(char c, char *s);
 char	*find_next_char(char *str, char *set, int i);
 char	**copy_arrarr(char **arr);
 int		compare_env(char *env, char *av, int k, int i);
+
+/*utils2.c*/
+
+int		ft_splitlen(char **split);
+char	**ft_subsplit(char **split, int x, int y);
 
 /*utils_print.c*/
 
