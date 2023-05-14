@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:38:52 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/12 19:49:11 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/14 15:31:07 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char	**split_quotes(char *s)
 
 	split = 0;
 	if (!s)
-		reiturn (0);
+		return (0);
 	strings = count_strings(s);
 	if (strings == 0)
 		return (0);
