@@ -124,7 +124,7 @@ char	**split_quotes(char *s)
 
 	split = 0;
 	if (!s)
-		reiturn (0);
+		return (0);
 	strings = count_strings(s);
 	if (strings == 0)
 		return (0);

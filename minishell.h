@@ -24,9 +24,22 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-typedef struct mshell
+//int g_status;
+
+typedef struct s_pront
 {
-	char	**env;
+	t_list *cmds;
+	char	**envp;
+	pid_t	pid;
+}	t_pront;
+
+
+typedef struct s_mshell
+{
+	char	**full_cmd;
+	char	*cmds;
+	int		infile;
+	int		outfile;
 }				t_mshell;
 
 /*split_command.c*/
@@ -60,7 +73,7 @@ char	**final_split(char *input, char **envp);
 int		in_set(char c, char *s);
 char	*find_next_char(char *str, char *set, int i);
 char	**copy_arrarr(char **arr);
-int		compare_env(char *env, char *av, int k);
+int		compare_env(char *env, char *av, int k, int i);
 
 /*utils_print.c*/
 

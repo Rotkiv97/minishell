@@ -64,7 +64,7 @@ char	*ft_av(char **envp, char *av, int i, int *flag)
 		k++;
 	while (envp[x])
 	{
-		if (!compare_env(envp[x], &av[i + 1], k))
+		if (!compare_env(envp[x], &av[i + 1], k, i))
 		{
 			av = ft_sub_dollar(av, envp[x], i, k);
 			*flag = 1;

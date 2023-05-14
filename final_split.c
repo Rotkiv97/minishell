@@ -25,10 +25,11 @@
 char	**final_split(char *input, char **envp)
 {
 	char	**final;
-
+	t_list	*cmds;
 	final = split_quotes(input);
 	final = ft_gest_ambiental(final, envp);
 	final = split_cmd(final);
 	final = trim_quotes(final);
+	
 	return (final);
 }
