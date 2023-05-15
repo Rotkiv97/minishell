@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_count_redirection(char **sub_cmd, char *redir)
+int	ft_count_redirection(char **sub_cmd, char redir)
 {
 	int		x;
 	int		count;
@@ -21,7 +21,7 @@ int	ft_count_redirection(char **sub_cmd, char *redir)
 	count = 0;
 	while (sub_cmd[x])
 	{
-		if (sub_cmd[x][0] == redir && (int)ft_strlen(sub_cmd[x] == 1))
+		if (sub_cmd[x][0] == redir && (int)ft_strlen(sub_cmd[x]) == 1)
 			count++;
 		else if (sub_cmd[x][0] != redir && in_set(sub_cmd[x][0], "<>") \
 			&& (int)ft_strlen(sub_cmd[x]) == 1)

@@ -47,6 +47,11 @@ typedef struct s_node
 
 void	ft_quit(char *error, int quit);
 
+/*ft_check_syntax.c */
+
+void	ft_check_syntax(char **sub_cmd);
+int		ft_count_redirection(char **sub_cmd, char redir);
+
 /*split_command.c*/
 
 int		count_sep(char *s, char *set);
@@ -56,6 +61,10 @@ char	**split_cmd(char **exp);
 /*spit_quotes.c*/
 
 char	**split_quotes(char *s);
+
+/* ft_crate_commands.c */
+
+t_list	*ft_create_cmds(char **full_cmds);
 
 /*ft_gest_ambiental.c*/
 
