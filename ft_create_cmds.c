@@ -22,13 +22,14 @@ t_list	*ft_new_cmd(char **full_cmds, int x, int y)
 
 
 	//node = (t_node *) malloc (sizeof(t_node));
+
 	sub_cmd = ft_subsplit(full_cmds, x, y);
 /* 	node->infile = ft_infile();
 	node->outfile = ft_outfile();
 	node->full_cmd = ft_full_cmd();
 	node->cmds = ft_full_cmd();
 	new = ft_lstnew(); */
-
+	ft_check_syntax(sub_cmd);
 	sub_cmd = sub_cmd;
 	x = x;
 	y = y;

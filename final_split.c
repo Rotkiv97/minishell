@@ -29,6 +29,7 @@ char	**final_split(char *input, char **envp)
 	final = split_quotes(input);
 	final = ft_gest_ambiental(final, envp);
 	final = split_cmd(final);
+	print_arrarr(final);
 	final = trim_quotes(final);
 	
 	return (final);
