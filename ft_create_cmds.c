@@ -13,6 +13,7 @@
 
 #include "minishell.h"
 
+
 t_list	*ft_new_cmd(char **full_cmds, int x, int y)
 {
 	//t_node	*node;
