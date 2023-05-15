@@ -14,6 +14,7 @@
 
 int	main(int ac, char **av, char **envp)
 {
+	//t_pront prompt;
 	char	*input;
 	char	**fin;
 
@@ -24,6 +25,7 @@ int	main(int ac, char **av, char **envp)
 		input = readline("\033[34mminishell>\033[0m");
 		fin = final_split(input, envp);
 		print_arrarr(fin);
+		//prompt.cmds = ft_create_cmds(fin);
 		free_arrarr(fin);
 		add_history(input);
 	}

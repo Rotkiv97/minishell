@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:16:15 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/12 19:40:47 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 20:05:33 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ int	max(int i, int j)
 	return (j);
 }
 
-int	compare_env(char *env, char *av, int k)
+int	compare_env(char *env, char *av, int k, int i)
 {
 	int	x;
 
 	x = 0;
 	while (env[x] && env[x] != '=')
 		x++;
-	return (ft_strncmp(env, av, max(k - 1, x)));
+	return (ft_strncmp(env, av, max(k - i - 1, x)));
 }

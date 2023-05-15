@@ -6,15 +6,14 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:20 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/10 11:41:09 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 20:05:04 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+int	main (int ac, char **av, char **anvp)
 {
-	char		*input;
 
 	(void)ac;
 	(void)av;
@@ -24,6 +23,8 @@ int	main(int ac, char **av, char **env)
 		input = readline("\033[32mminishell>\033[0m");
 		print_arrarr(split_quotes(input));
 		add_history(input);
+		free_arrarr(str);
+		free(input);
 	}
-	return (0);
+	str =str;
 }

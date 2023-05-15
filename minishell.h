@@ -91,4 +91,7 @@ void	free_arrarr(char **mat);
 /*vik ft*/
 char **ft_gest_ambiental(char **av, char **envp);
 
+/*vik ft*/
+char **ft_gest_ambiental(char **av, char **envp);
+
 #endif

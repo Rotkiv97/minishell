@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:13:45 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/05/12 19:55:17 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 20:04:50 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_av(char **envp, char *av, int i, int *flag)
 		k++;
 	while (envp[x])
 	{
-		if (!compare_env(envp[x], &av[i + 1], k))
+		if (!compare_env(envp[x], &av[i + 1], k, i))
 		{
 			av = ft_sub_dollar(av, envp[x], i, k);
 			*flag = 1;
