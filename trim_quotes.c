@@ -37,7 +37,8 @@ char	*delete_quotes(char *to_trim, char quote)
 
 char	**trim_quotes(char **exp)
 {
-	int		i;
+	int	i;
+	//int	x;
 
 	i = 0;
 	if (!exp)

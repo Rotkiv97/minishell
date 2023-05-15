@@ -78,21 +78,9 @@ int	fill_line(char **line, char *s, int j)
 {
 	int	k;
 
-	k = 0;
-	if (in_set(s[j], "\"\'"))
-	{
-		k = ft_next_index_quote(s, j);
-		*line = (char *) malloc(sizeof(char) * (k - j + 1));
-		ft_strlcpy(*line, &s[j], (k - j + 1));
-	}
-	else if (s[j])
-	{
-		k = j;
-		while (s[k] && !in_set(s[k], " \'\""))
-			k++;
-		*line = (char *) malloc(sizeof(char) * (k - j + 1));
-		ft_strlcpy(*line, &s[j], (k - j + 1));
-	}
+	k = ft_next_index_quote(s, j);
+	*line = (char *) malloc (sizeof(char) * (k - j + 1));
+	ft_strlcpy(*line, &s[j], k - j + 1);
 	return (k);
 }
 
@@ -106,13 +94,9 @@ char	**fill_split(char **split, char *s, int strings)
 	while (i < strings && s[j])
 	{
 		if (s[j] == ' ')
-		{
 			while (s[j] && s[j] == ' ')
 				j++;
-		}
-		else if (in_set(s[j], "\"\'"))
-			j = fill_line(&split[i++], s, j);
-		else if (s[j])
+		else
 			j = fill_line(&split[i++], s, j);
 	}
 	split[i] = 0;
@@ -138,7 +122,6 @@ char	**split_quotes(char *s)
 	if (!s)
 		return (0);
 	strings = count_strings(s);
-	printf("Strings %d\n", strings);
 	if (strings == 0)
 		return (0);
 	split = (char **) malloc(sizeof(char *) * (strings + 1));
