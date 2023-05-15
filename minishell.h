@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/14 21:07:05 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/12 20:05:17 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include "gnl/get_next_line_bonus.h"
 
+# include <limits.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -41,6 +42,10 @@ typedef struct s_node
 	int		infile;
 	int		outfile;
 }t_node;
+
+/*ft_quit.c*/
+
+void	ft_quit(char *error, int quit);
 
 /*split_command.c*/
 
