@@ -6,13 +6,14 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:38:52 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/14 15:40:07 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/16 17:23:45 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*It finds next index after the first quote. 
+/*
+It finds next index after the first quote. 
 If there is no matching quote it returns -1; 
 */
 
@@ -30,7 +31,7 @@ int	ft_next_index_quote(char *s, int i)
 			while (s[i] && s[i] != q)
 				i++;
 			if (!s[i])
-				ft_quit("Unmatched quotes\n", -1);
+				ft_quit("\033[5mError : unmatched quotes\n", -1);
 			else
 				i++;
 		}
