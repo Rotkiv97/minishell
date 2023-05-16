@@ -25,10 +25,13 @@
 char	**final_split(char *input, char **envp)
 {
 	char	**final;
-	t_list	*cmds;
+	//t_list	*cmds;
 	final = split_quotes(input);
+	print_arrarr(final);
 	final = ft_gest_ambiental(final, envp);
 	final = split_cmd(final);
+	printf("\033[32m");
+	print_arrarr(final);
 	final = trim_quotes(final);
 	
 	return (final);

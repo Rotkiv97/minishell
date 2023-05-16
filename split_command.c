@@ -14,26 +14,22 @@
 
 int	count_sep_cmd(char *s, char *set)
 {
-	int	i;
-	int	count;
-	int	flag;
+	int		i;
+	int		count;
+	int		flag;
+	char	*set;
+	char	q;
 
 	i = 0;
 	count = 0;
 	flag = 1;
 	while (s[i])
 	{
-		if (in_set(s[i], set))
+		while (s[i] && !in_set(s[i], "\'\""))
 		{
-			flag = 1;
-			count++;
+			if (in_set(s[i], "<>|"))
+				count++;
 		}
-		else if (flag == 1)
-		{
-			count++;
-			flag = 0;
-		}
-		i++;
 	}
 	return (count);
 }
@@ -70,18 +66,28 @@ void	fill_nano(char **nano, char *exp, char *set)
 char	**nano_split_cmd(char *exp)
 {
 	int		sep;
+	int		y;
 	char	**nano;
 
-	if (!find_next_char(exp, "<>|", 0) || in_set(exp[0], "\'\""))
+	y = 0;
+	while(exp[y])
 	{
-		nano = (char **) malloc (sizeof (char *) * (2));
-		nano[0] = ft_strdup(exp);
-		nano[1] = 0;
-		return (nano);
+		if (!find_next_char(exp, "<>|", 0) || in_set(exp[y], "\'\""))
+		{
+			
+			nano = (char **) malloc (sizeof (char *) * (2));
+			nano[0] = ft_strdup(exp);
+			nano[1] = 0;
+			
+			return (nano);
+		}
+		y++;
 	}
 	sep = count_sep_cmd(exp, "<>|");
 	nano = (char **) malloc (sizeof(char *) * (sep + 1));
+	
 	fill_nano(nano, exp, "<>|");
+	printf("ciao-------------\n");
 	return (nano);
 }
 

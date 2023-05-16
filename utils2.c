@@ -28,12 +28,23 @@ char	**ft_subsplit(char **split, int x, int y)
 {
 	char	**sub;
 	int		len;
+	int j;
 
+	j = 0;
 	if (!split)
 		return (0);
 	len = ft_splitlen(split);
 	if (!len)
 		return (0);
-	sub = (char **) malloc (sizeof(char *) * (len + 1));
+	if (x > len || y > len )
+		return (0);
+	sub = (char **) malloc (sizeof(char *) * (x - y + 1));
+	while(y <= x && split[y])
+	{
+		sub[j] = ft_strdup(split[y]);
+		j++;
+		y++;
+	}
+	sub[j] = 0;
 	return (sub);
 }

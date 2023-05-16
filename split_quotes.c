@@ -16,14 +16,33 @@
 If there is no matching quote it returns -1; 
 */
 
-int	next_quote(char *s, int i, char q)
+int	ft_next_index_quote(char *s, int i)
 {
-	while (s[i] && s[i] != q)
-		i++;
-	if (!s[i])
-		return (-1);
-	return (i + 1);
+	char	q;
+	char	*set;
+
+	set = "\'\"";
+	while (s[i])
+	{
+		if (in_set(s[i], set))
+		{
+			q = s[i++];
+			while (s[i] && s[i] != q)
+				i++;
+			if (!s[i])
+				ft_quit("Unmatched quotes\n", -1);
+			else
+				i++;
+		}
+		while (s[i] && !in_set(s[i], set) && s[i] != ' ')
+			i++;
+		if (s[i] == ' ')
+			break ;
+	}
+	return(i);
 }
+
+
 
 /*Nelle parentesi chiuse posso non devo interpretare nulla.
 Mi fermo quando, dopo aver trovato un numero pari di parentesi,
@@ -43,21 +62,14 @@ int	count_strings(char *s)
 	strings = 0;
 	while (s[i])
 	{
-		while (s[i] && s[i] == ' ')
-			i++;
-		if (in_set(s[i], "\'\""))
+		if (s[i] != ' ')
 		{
-			i = next_quote(s, i + 1, s[i]);
-			if (i == -1)
-				return (0);
+			i = ft_next_index_quote(s, i);
 			strings++;
 		}
-		else if (s[i])
-		{
-			while (s[i] && !in_set(s[i], " \'\""))
+		else
+			while (s[i] && s[i] == ' ')
 				i++;
-			strings++;
-		}
 	}
 	return (strings);
 }
@@ -66,21 +78,9 @@ int	fill_line(char **line, char *s, int j)
 {
 	int	k;
 
-	k = 0;
-	if (in_set(s[j], "\"\'"))
-	{
-		k = next_quote(s, j + 1, s[j]);
-		*line = (char *) malloc(sizeof(char) * (k - j + 1));
-		ft_strlcpy(*line, &s[j], (k - j + 1));
-	}
-	else if (s[j])
-	{
-		k = j;
-		while (s[k] && !in_set(s[k], " \'\""))
-			k++;
-		*line = (char *) malloc(sizeof(char) * (k - j + 1));
-		ft_strlcpy(*line, &s[j], (k - j + 1));
-	}
+	k = ft_next_index_quote(s, j);
+	*line = (char *) malloc (sizeof(char) * (k - j + 1));
+	ft_strlcpy(*line, &s[j], k - j + 1);
 	return (k);
 }
 
@@ -94,13 +94,9 @@ char	**fill_split(char **split, char *s, int strings)
 	while (i < strings && s[j])
 	{
 		if (s[j] == ' ')
-		{
 			while (s[j] && s[j] == ' ')
 				j++;
-		}
-		else if (in_set(s[j], "\"\'"))
-			j = fill_line(&split[i++], s, j);
-		else if (s[j])
+		else
 			j = fill_line(&split[i++], s, j);
 	}
 	split[i] = 0;
