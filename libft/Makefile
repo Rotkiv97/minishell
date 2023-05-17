@@ -6,7 +6,7 @@
 #    By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/15 13:27:49 by dcolucci          #+#    #+#              #
-#    Updated: 2023/04/24 18:42:34 by dcolucci         ###   ########.fr        #
+#    Updated: 2023/05/17 12:53:37 by dcolucci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ BONUS	=	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
 BOBJS	=	$(BONUS:.c=.o)
 
 CC	=	gcc
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra -g
 RM	=	rm -f
 NAME	=	libft.a
 

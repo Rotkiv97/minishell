@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:12:34 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/16 18:06:41 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:52:04 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	ft_next_index_cmd(char *s, char *set, int i)
 		{
 			q = s[i++];
 			while (s[i] && s[i] != q)
+				i++;
+			if (s[i] == q)
 				i++;
 		}
 		while (s[i] && !in_set(s[i], set_q) && !in_set(s[i], set))
@@ -43,42 +45,38 @@ int	count_sep_cmd(char *s, char *set)
 	count = 0;
 	while (s[i])
 	{
+		if (!in_set(s[i], set))
+			count++;
 		i = ft_next_index_cmd(s, set, i);
-		printf("i : %d\n", i);
-		printf("s[i] : %c\n", s[i]);
-		printf("s[i] in number : %d\n", s[i]);
 		if (in_set(s[i], set))
 		{
 			i++;
 			count++;
 		}
 	}
-	printf("count: %d\n", count);
 	return (count);
 }
 
-void	fill_nano(char **nano, char *exp, char *set, int sep)
+void	ft_fill_nano(char **nano, char *exp, char *set, int sep)
 {
 	int	i;
 	int	j;
 	int	k;
 
 	i = 0;
-	j = 0;
 	k = 0;
+	j = ft_next_index_cmd(exp, set, i);
 	while (exp[i] && k < sep)
 	{
 		if (in_set(exp[i], set))
 		{
-			nano[k] = (char *) malloc (sizeof (char) * 2);
+			nano[k] = (char *) malloc (sizeof(char) * 2);
 			ft_strlcpy(nano[k++], &exp[i++], 2);
+			j = ft_next_index_cmd(exp, set, i);
 		}
 		else
 		{
-			j = i;
-			while (exp[j] && !in_set(exp[j], set))
-				j++;
-			nano[k] = malloc (sizeof(char) * (j - i + 1));
+			nano[k] = (char *) malloc (sizeof(char) * (j - i + 1));
 			ft_strlcpy(nano[k++], &exp[i], (j - i + 1));
 			i = j;
 		}
@@ -89,9 +87,11 @@ void	fill_nano(char **nano, char *exp, char *set, int sep)
 char	**nano_split_cmd(char *exp)
 {
 	int		sep;
+	int		index_cmd;
 	char	**nano;
 
-	if (!find_next_char(exp, "<>|", 0) || in_set(exp[0], "\'\""))
+	index_cmd = ft_next_index_cmd(exp, "<>|", 0);
+	if (!exp[index_cmd])
 	{
 		nano = (char **) malloc (sizeof (char *) * (2));
 		nano[0] = ft_strdup(exp);
@@ -100,7 +100,7 @@ char	**nano_split_cmd(char *exp)
 	}
 	sep = count_sep_cmd(exp, "<>|");
 	nano = (char **) malloc (sizeof(char *) * (sep + 1));
-	fill_nano(nano, exp, "<>|", sep);
+	ft_fill_nano(nano, exp, "<>|", sep);
 	return (nano);
 }
 
@@ -154,6 +154,7 @@ char	**split_cmd(char **exp)
 	while (exp[x])
 	{
 		line_spl = nano_split_cmd(exp[x]);
+		//print_arrarr(line_spl);
 		if (!line_spl)
 			return (0);
 		split_cmd = join_split(split_cmd, line_spl);

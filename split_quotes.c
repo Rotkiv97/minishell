@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:38:52 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/16 17:23:45 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/17 11:15:35 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_next_index_quote(char *s, int i)
 		if (s[i] == ' ')
 			break ;
 	}
-	return(i);
+	return (i);
 }
 
 
