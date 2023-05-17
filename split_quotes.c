@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:38:52 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/17 11:15:35 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:37:17 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_next_index_quote(char *s, int i)
 			while (s[i] && s[i] != q)
 				i++;
 			if (!s[i])
-				ft_quit("\033[5mError : unmatched quotes\n", -1);
+				ft_quit("\033[31;5;107mError : unmatched quotes\n", -1);
 			else
 				i++;
 		}

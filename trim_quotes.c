@@ -6,26 +6,67 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:04:53 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/12 19:50:57 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:47:26 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*delete_quotes(char *to_trim, char quote)
+int		ft_next_index_trim(char *s, int i)
 {
-	char	*trim;
-	char	*tmp;
-	char	q[2];
+	char 	q;
+	char	*set;
 
-	tmp = to_trim;
-	q[0] = quote;
-	q[1] = '\0';
-	trim = ft_strtrim(to_trim, q);
-	free(tmp);
-	return (trim);
+	set = "\'\"";
+	while (s[i])
+	{
+		if (in_set((s[i]), set))
+		{
+			q = s[i];
+			i++;
+			while (s[i] && s[i] != q)
+				i++;
+			return (i);
+		}
+		else
+			break;
+	}
+	return (i);
 }
 
+char	*delete_quotes(char *s)
+{
+	int		j;
+	int		k;
+	char	*tmp;
+	char	*join;
+
+	j = 0;
+	k = 0;
+	join = 0;
+	while(s[j])
+	{
+		if(in_set(s[j], "\"\'"))
+		{
+			k = ft_next_index_trim(s, j);
+			tmp = malloc(sizeof(char) * (k - j));
+			ft_strlcpy(tmp, &s[j + 1], k - j);
+			join = ft_strjoin_free(join, tmp);
+			j = k + 1;
+		}
+		else 
+		{
+			k = j;
+			while(s[k] && !in_set(s[k], "\"\'"))
+				k++;
+			tmp = malloc(sizeof(char) * (k - j + 1));
+			ft_strlcpy(tmp, &s[j], k - j + 1);
+			join = ft_strjoin_free(join, tmp);
+			j = k;
+		}
+	}
+	return (join);
+}
 /*
 	Description:
 		The function trim_quotes modify every string of 
@@ -35,19 +76,16 @@ char	*delete_quotes(char *to_trim, char quote)
 		It returns the same address of exp but the strings are modified.
 */
 
-char	**trim_quotes(char **exp)
+char	**trim_quotes(char **cmd)
 {
 	int	i;
+
 	//int	x;
 
-	i = 0;
-	if (!exp)
+	i = -1;
+	if (!cmd)
 		return (0);
-	while (exp[i])
-	{
-		if (in_set(exp[i][0], "\'\""))
-			exp[i] = delete_quotes(exp[i], exp[i][0]);
-		i++;
-	}
-	return (exp);
+	while (cmd[++i])
+		cmd[i] = delete_quotes(cmd[i]);
+	return (cmd);
 }

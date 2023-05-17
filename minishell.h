@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/12 20:05:17 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/17 17:21:09 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	**split_cmd(char **exp);
 
 /*spit_quotes.c*/
 
+int		ft_next_index_quote(char *s, int i);
 char	**split_quotes(char *s);
 
 /* ft_crate_commands.c */
@@ -92,6 +93,7 @@ int		compare_env(char *env, char *av, int k, int i);
 /*utils2.c*/
 
 int		ft_splitlen(char **split);
+char	*ft_strjoin_free(char *s1, char *s2);
 char	**ft_subsplit(char **split, int x, int y);
 
 /*utils_print.c*/
