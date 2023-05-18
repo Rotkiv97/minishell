@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 16:24:23 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:15:12 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,13 @@ char	**split_quotes(char *s);
 
 /*ft_create_cmds.c*/
 
-t_list	*ft_create_cmds(char **full_cmds);
+t_list	**ft_create_cmds(char **full_cmds);
 
 
 /* ft_crate_node.c */
 
 int		ft_infile(char **sub_cmd);
+int		ft_outfile(char **sub_cmd);
 char 	*ft_cmd(char **sub_cmd);
 char	**ft_full_cmd(char **sub_cmd);
 
@@ -108,6 +109,7 @@ char	**ft_subsplit(char **split, int x, int y);
 /*utils_print.c*/
 
 void	print_arrarr(char **arr);
+void	print_node(t_node *node, char **sub_spl);
 
 /*utils1_free.c*/
 

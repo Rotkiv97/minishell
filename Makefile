@@ -19,7 +19,7 @@ $(NAME): $(SRC) $(UTILS)
 	@gcc $(SRC) $(UTILS) $(CFLAGS) $(LIB) -o $(NAME) -lreadline
 
 test: $(SRC_TEST) $(UTILS)
-	@make -s -C libft
+	@make bonus -s -C libft
 	@gcc $(SRC_TEST) $(UTILS) $(GNL) $(CFLAGS) $(LIB) -o $(TEST) -lreadline
 
 clean:
