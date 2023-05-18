@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:56:10 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 12:24:06 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:31:19 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_count_redirection(char **sub_cmd, char redir)
 	{
 		if (sub_cmd[x][0] == redir && ft_strlen(sub_cmd[x]) == 1)
 			count++;
-		else if (sub_cmd[x][0] != redir && in_set(sub_cmd[x][0], "<>")\
+		else if (sub_cmd[x][0] != redir && in_set(sub_cmd[x][0], "<>") \
 			&& ft_strlen(sub_cmd[x]) == 1)
 			return (INT_MAX);
 		else

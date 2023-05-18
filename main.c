@@ -6,13 +6,13 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:20 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/12 20:05:04 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:31:44 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main (int ac, char **av, char **anvp)
+int	main(int ac, char **av, char **anvp)
 {
 
 	(void)ac;
@@ -26,5 +26,5 @@ int	main (int ac, char **av, char **anvp)
 		free_arrarr(str);
 		free(input);
 	}
-	str =str;
+	str = str;
 }

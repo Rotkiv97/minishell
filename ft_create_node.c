@@ -6,51 +6,52 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:00:19 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 19:05:57 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:23:42 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_infile(char **sub_cmd)
+int	ft_infile(char **sub_cmd)
 {
-	int fd;
-	int x;
+	int	fd;
+	int	x;
 
 	x = 0;
 	fd = 0;
-	while(sub_cmd[x])
+	while (sub_cmd[x])
 	{
-		if(in_set(sub_cmd[x][0], "<"))
+		if (in_set(sub_cmd[x][0], "<"))
 		{
-			if(sub_cmd[x + 1][0] == '<')//ft_heredoc(sub_cmd[x + 2]);
-				return(-5);
+			if (sub_cmd[x + 1][0] == '<')//ft_heredoc(sub_cmd[x + 2]);
+				return (-5);
 			else
 			{
 				fd = open(sub_cmd[x + 1], O_RDONLY);
-				if(fd == -1)
-					ft_quit(ft_strjoin("\033[31mCannot open ", sub_cmd[x + 1]), -1);
+				if (fd == -1)
+					ft_quit(ft_strjoin("\033[31mCannot open ", \
+					sub_cmd[x + 1]), -1);
 				x = x + 1;
 			}
 		}
-		else 
+		else
 			x++;
 	}
-	return(fd);
+	return (fd);
 }
 
-int ft_outfile(char **sub_cmd)
+int	ft_outfile(char **sub_cmd)
 {
-	int fd;
-	int x;
+	int	fd;
+	int	x;
 
 	x = 0;
 	fd = 1;
-	while(sub_cmd[x])
+	while (sub_cmd[x])
 	{
-		if(sub_cmd[x][0] == '>')
+		if (sub_cmd[x][0] == '>')
 		{
-			if(sub_cmd[x + 1][0] == '>')
+			if (sub_cmd[x + 1][0] == '>')
 			{
 				fd = open(sub_cmd[x + 2], O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
 				if (fd == -1)
@@ -65,13 +66,13 @@ int ft_outfile(char **sub_cmd)
 				x = x + 1;
 			}
 		}
-		else 
+		else
 			x++;
 	}
-	return(fd);
+	return (fd);
 }
 
-char *ft_cmd(char **sub_cmd)
+char	*ft_cmd(char **sub_cmd)
 {
 	int		i;
 	char	*cmd;

@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:56:18 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/17 18:49:19 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:31:04 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 char	**final_split(char *input, char **envp)
 {
 	char	**final;
-	//t_list	*cmds;
+
 	final = split_quotes(input);
 	final = ft_gest_ambiental(final, envp);
 	final = split_cmd(final);

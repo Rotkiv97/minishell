@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 21:01:11 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 15:18:22 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:32:15 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	**ft_add_to_split(char **spl, char *str)
 	char	**join;
 	int		len;
 	int		x;
-	
+
 	x = 0;
 	if (!spl)
 	{
@@ -109,7 +109,7 @@ char	**ft_subsplit(char **split, int i, int j)
 	if (!split)
 		return (0);
 	sub = (char **) malloc (sizeof(char *) * (j - i + 1));
-	while(i < j && split[i])
+	while (i < j && split[i])
 		sub[k++] = ft_strdup(split[i++]);
 	sub[k] = 0;
 	return (sub);

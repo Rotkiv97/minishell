@@ -5,14 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/05/18 19:15:32 by dcolucci         ###   ########.fr       */
+/*   Created: 2023/05/18 19:25:46 by dcolucci          #+#    #+#             */
+/*   Updated: 2023/05/18 19:27:18 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-
 
 t_list	*ft_new_cmd(char **sub_spl)
 {
@@ -21,7 +19,7 @@ t_list	*ft_new_cmd(char **sub_spl)
 
 	ft_check_syntax(sub_spl);
 	node = (t_node *) malloc (sizeof(t_node));
- 	node->infile = ft_infile(sub_spl);
+	node->infile = ft_infile(sub_spl);
 	node->outfile = ft_outfile(sub_spl);
 	node->full_cmd = ft_full_cmd(sub_spl);
 	node->cmds = ft_cmd(sub_spl);

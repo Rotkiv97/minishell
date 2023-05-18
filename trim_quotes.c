@@ -6,15 +6,15 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:04:53 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/17 18:47:26 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:28:15 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_next_index_trim(char *s, int i)
+int	ft_next_index_trim(char *s, int i)
 {
-	char 	q;
+	char	q;
 	char	*set;
 
 	set = "\'\"";
@@ -29,7 +29,7 @@ int		ft_next_index_trim(char *s, int i)
 			return (i);
 		}
 		else
-			break;
+			break ;
 	}
 	return (i);
 }
@@ -44,9 +44,9 @@ char	*delete_quotes(char *s)
 	j = 0;
 	k = 0;
 	join = 0;
-	while(s[j])
+	while (s[j])
 	{
-		if(in_set(s[j], "\"\'"))
+		if (in_set(s[j], "\"\'"))
 		{
 			k = ft_next_index_trim(s, j);
 			tmp = malloc(sizeof(char) * (k - j));
@@ -54,10 +54,10 @@ char	*delete_quotes(char *s)
 			join = ft_strjoin_free(join, tmp);
 			j = k + 1;
 		}
-		else 
+		else
 		{
 			k = j;
-			while(s[k] && !in_set(s[k], "\"\'"))
+			while (s[k] && !in_set(s[k], "\"\'"))
 				k++;
 			tmp = malloc(sizeof(char) * (k - j + 1));
 			ft_strlcpy(tmp, &s[j], k - j + 1);
@@ -79,8 +79,6 @@ char	*delete_quotes(char *s)
 char	**trim_quotes(char **cmd)
 {
 	int	i;
-
-	//int	x;
 
 	i = -1;
 	if (!cmd)

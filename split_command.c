@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:12:34 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 14:55:47 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:31:59 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ char	**split_cmd(char **exp)
 	while (exp[x])
 	{
 		line_spl = nano_split_cmd(exp[x]);
-		//print_arrarr(line_spl);
 		if (!line_spl)
 			return (0);
 		split_cmd = ft_join_split(split_cmd, line_spl);

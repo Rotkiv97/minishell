@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 19:15:12 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:26:57 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_sh
 	char	**envp;
 	pid_t	pid;
 }t_sh;
-
 
 typedef struct s_node
 {
@@ -67,12 +66,11 @@ char	**split_quotes(char *s);
 
 t_list	**ft_create_cmds(char **full_cmds);
 
-
 /* ft_crate_node.c */
 
 int		ft_infile(char **sub_cmd);
 int		ft_outfile(char **sub_cmd);
-char 	*ft_cmd(char **sub_cmd);
+char	*ft_cmd(char **sub_cmd);
 char	**ft_full_cmd(char **sub_cmd);
 
 /*ft_gest_ambiental.c*/
@@ -116,9 +114,9 @@ void	print_node(t_node *node, char **sub_spl);
 void	free_arrarr(char **mat);
 
 /*vik ft*/
-char **ft_gest_ambiental(char **av, char **envp);
+char	**ft_gest_ambiental(char **av, char **envp);
 
 /*vik ft*/
-char **ft_gest_ambiental(char **av, char **envp);
+char	**ft_gest_ambiental(char **av, char **envp);
 
 #endif
