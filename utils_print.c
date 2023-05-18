@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 19:04:05 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 19:17:14 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:20:23 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_node(t_node *node, char **sub_spl)
 	printf("-------------\n");
 	printf("\033[37mSub_split :\n");
 	print_arrarr(sub_spl);
-	printf("\033[30mNode cmd : %s\n", node->cmds);
+	printf("\033[31mNode cmd : %s\n", node->cmds);
 	printf("\033[32mNode FULL_CMD :\n");
 	print_arrarr(node->full_cmd);
 	printf("\033[33mIN_FILE : %d\n", node->infile);
