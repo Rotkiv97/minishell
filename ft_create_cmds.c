@@ -4,59 +4,56 @@
 /*   ft_create_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
-/*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/14 17:58:07 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/05/14 21:04:15 by dcolucci         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/05/18 16:23:02 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
 
-t_list	*ft_new_cmd(char **full_cmds, int x, int y)
+t_list	*ft_new_cmd(char **sub_spl)
 {
 	//t_node	*node;
 	//t_list	*new;
-	char	**sub_cmd;
 
-
+	ft_check_syntax(sub_spl);
 	//node = (t_node *) malloc (sizeof(t_node));
-
-	sub_cmd = ft_subsplit(full_cmds, x, y);
 /* 	node->infile = ft_infile();
 	node->outfile = ft_outfile();
 	node->full_cmd = ft_full_cmd();
 	node->cmds = ft_full_cmd();
 	new = ft_lstnew(); */
-	ft_check_syntax(sub_cmd);
-	sub_cmd = sub_cmd;
-	x = x;
-	y = y;
+	//printf("\033[35mCommand is : %s\n", ft_cmd(sub_spl));
+	//printf("\033[31mFull_cmd is :\n");
+	//print_arrarr(ft_full_cmd(sub_spl));
+	printf("\033[35mintfile is : [%d] \n", ft_infile(sub_spl));
 	return (0);
 }
 
-t_list	*ft_create_cmds(char **full_cmds)
+t_list	*ft_create_cmds(char **final)
 {
-	//t_list	*cmds;
-	//t_list	*new;
 	int		x;
 	int		y;
+	char	**sub_split;
 
 	x = 0;
 	y = 0;
-	if (full_cmds == NULL)
+	if (final == NULL)
 		return (NULL);
-	while (full_cmds[x])
+	while (final[x])
 	{
-		if (full_cmds[x][0] == '|')
+		if (final[x][0] == '|')
 		{
-			ft_new_cmd(full_cmds, x, y);
-			y = x;
+			sub_split = ft_subsplit(final, y, x);
+			ft_new_cmd(sub_split);
+			y = x + 1;
 		}
 		x++;
 	}
-	ft_new_cmd(full_cmds, x, y);
-	//new = new;
+	sub_split = ft_subsplit(final, y, x);
+	ft_new_cmd(sub_split);
 	return (0);
 }

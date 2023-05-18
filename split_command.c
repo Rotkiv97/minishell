@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:12:34 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/17 15:52:04 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 14:55:47 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,34 +104,6 @@ char	**nano_split_cmd(char *exp)
 	return (nano);
 }
 
-char	**join_split(char **cmd, char **line_spl)
-{
-	char	**join;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (!cmd)
-		return (line_spl);
-	while (cmd[i])
-		i++;
-	while (line_spl[j])
-		j++;
-	join = (char **) malloc (sizeof(char *) * (i + j + 1));
-	i = 0;
-	j = 0;
-	while (cmd[i])
-		join[j++] = ft_strdup(cmd[i++]);
-	i = 0;
-	while (line_spl[i])
-		join[j++] = ft_strdup(line_spl[i++]);
-	join[j] = 0;
-	free_arrarr(cmd);
-	free_arrarr(line_spl);
-	return (join);
-}
-
 /*
 	Description :
 		split_cmd function split every string of the exp double 
@@ -157,7 +129,7 @@ char	**split_cmd(char **exp)
 		//print_arrarr(line_spl);
 		if (!line_spl)
 			return (0);
-		split_cmd = join_split(split_cmd, line_spl);
+		split_cmd = ft_join_split(split_cmd, line_spl);
 		x++;
 	}
 	free(exp);

@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:56:10 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/15 15:40:33 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 12:24:06 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	ft_check_syntax(char **sub_cmd)
 		if (in_set(sub_cmd[x][0], "<>") && ft_strlen(sub_cmd[x]) == 1)
 		{
 			count = ft_count_redirection(&sub_cmd[x + 1], sub_cmd[x][0]);
-			printf("count : %d\n", count);
 			if (count > 2 || !sub_cmd[x + 1])
 				ft_quit(error, -1);
 			else

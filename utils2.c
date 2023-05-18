@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 21:01:11 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/17 17:20:52 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 15:18:22 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,73 @@ int	ft_splitlen(char **split)
 	return (i);
 }
 
-char	**ft_subsplit(char **split, int x, int y)
+char	**ft_join_split(char **cmd, char **line_spl)
+{
+	char	**join;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!cmd)
+		return (line_spl);
+	while (cmd[i])
+		i++;
+	while (line_spl[j])
+		j++;
+	join = (char **) malloc (sizeof(char *) * (i + j + 1));
+	i = 0;
+	j = 0;
+	while (cmd[i])
+		join[j++] = ft_strdup(cmd[i++]);
+	i = 0;
+	while (line_spl[i])
+		join[j++] = ft_strdup(line_spl[i++]);
+	join[j] = 0;
+	free_arrarr(cmd);
+	free_arrarr(line_spl);
+	return (join);
+}
+
+char	**ft_add_to_split(char **spl, char *str)
+{
+	char	**join;
+	int		len;
+	int		x;
+	
+	x = 0;
+	if (!spl)
+	{
+		join = (char **) malloc (sizeof(char *) * (2));
+		join[0] = ft_strdup(str);
+		join[1] = 0;
+		return (join);
+	}
+	if (!str)
+		return (spl);
+	len = ft_splitlen(spl);
+	join = (char **) malloc (sizeof(char *) * (len + 1));
+	while (spl[x])
+	{
+		join[x] = ft_strdup(spl[x]);
+		x++;
+	}
+	join[x] = ft_strdup(str);
+	join[x + 1] = 0;
+	return (join);
+}
+
+char	**ft_subsplit(char **split, int i, int j)
 {
 	char	**sub;
-	int		len;
-	int j;
+	int		k;
 
-	j = 0;
+	k = 0;
 	if (!split)
 		return (0);
-	len = ft_splitlen(split);
-	if (!len)
-		return (0);
-	if (x > len || y > len )
-		return (0);
-	sub = (char **) malloc (sizeof(char *) * (x - y + 1));
-	while(y <= x && split[y])
-	{
-		sub[j] = ft_strdup(split[y]);
-		j++;
-		y++;
-	}
-	sub[j] = 0;
+	sub = (char **) malloc (sizeof(char *) * (j - i + 1));
+	while(i < j && split[i])
+		sub[k++] = ft_strdup(split[i++]);
+	sub[k] = 0;
 	return (sub);
 }

@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:08:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/17 14:50:58 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/18 12:04:21 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int ac, char **av, char **envp)
 		input = readline("\033[34mminishell>\033[0m");
 		fin = final_split(input, envp);
 		//print_arrarr(fin);
-		//ft_create_cmds(fin);
+		ft_create_cmds(fin);
 		free_arrarr(fin);
 		add_history(input);
 	}
