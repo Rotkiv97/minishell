@@ -68,6 +68,7 @@ char	**split_quotes(char *s);
 t_list	**ft_create_cmds(char **full_cmds);
 
 
+
 /* ft_crate_node.c */
 
 int		ft_infile(char **sub_cmd);
@@ -75,9 +76,15 @@ int		ft_outfile(char **sub_cmd);
 char 	*ft_cmd(char **sub_cmd);
 char	**ft_full_cmd(char **sub_cmd);
 
+
 /*ft_gest_ambiental.c*/
 
 char	**ft_gest_ambiental(char **spl, char **envp);
+
+/*ft_heredoc.c*/
+
+int	ft_heredoc(char *delimiter);
+
 
 /*expand_vars.c*/
 
@@ -97,6 +104,8 @@ int		in_set(char c, char *s);
 char	*find_next_char(char *str, char *set, int i);
 char	**copy_arrarr(char **arr);
 int		compare_env(char *env, char *av, int k, int i);
+int	ft_max(int i, int j);
+
 
 /*utils2.c*/
 

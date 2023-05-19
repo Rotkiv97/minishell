@@ -64,7 +64,7 @@ char	*find_next_char(char *str, char *set, int i)
 	return (0);
 }
 
-int	max(int i, int j)
+int	ft_max(int i, int j)
 {
 	if (i > j)
 		return (i);
@@ -78,5 +78,5 @@ int	compare_env(char *env, char *av, int k, int i)
 	x = 0;
 	while (env[x] && env[x] != '=')
 		x++;
-	return (ft_strncmp(env, av, max(k - i - 1, x)));
+	return (ft_strncmp(env, av, ft_max(k - i - 1, x)));
 }
