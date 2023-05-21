@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 19:26:57 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/21 16:21:46 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,15 @@ int		ft_outfile(char **sub_cmd);
 char	*ft_cmd(char **sub_cmd);
 char	**ft_full_cmd(char **sub_cmd);
 
+
 /*ft_gest_ambiental.c*/
 
 char	**ft_gest_ambiental(char **spl, char **envp);
+
+/*ft_heredoc.c*/
+
+int	ft_heredoc(char *delimiter);
+
 
 /*expand_vars.c*/
 
@@ -95,6 +101,8 @@ int		in_set(char c, char *s);
 char	*find_next_char(char *str, char *set, int i);
 char	**copy_arrarr(char **arr);
 int		compare_env(char *env, char *av, int k, int i);
+int	ft_max(int i, int j);
+
 
 /*utils2.c*/
 

@@ -34,6 +34,7 @@ int	main(int ac, char **av, char **envp)
 	printf("\033[32m ;   | |`-'      ;  :    ;|   |/      ;  :    ;'--'.     /|  | ,'    |   :    ||  ,   /|  ,   / \n");
 	printf("\033[32m |   ;/          |  ,   / '---'       |  ,   /   `--'---' `--''       \\   \\  /  ---`-'  ---`-'\n");
 	printf("\033[32m '---'            ---`-'               ---`-'                          `----'\n"); */
+	printf("%d\n", getpid());
 	while (1)
 	{
 		input = readline("\033[34mminishell>\033[0m");
