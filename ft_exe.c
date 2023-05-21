@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_exe.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 18:48:20 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/21 16:54:56 by dcolucci         ###   ########.fr       */
+/*   Created: 2023/05/18 19:57:26 by dcolucci          #+#    #+#             */
+/*   Updated: 2023/05/21 18:01:56 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+char	*ft_path_finder(t_node *node)
 {
+	char	*full_path;
+	char	*cmd;
+}
 
-	(void)ac;
-	(void)av;
-	(void)envp;
-	while (1)
-	{	
-		input = readline("\033[32mminishell>\033[0m");
-		print_arrarr(split_quotes(input));
-		add_history(input);
-		free_arrarr(str);
-		free(input);
+void	ft_executor()
+{
+	
+}
+
+void	ft_exe(t_list *cmds, t_sh *shell)
+{
+	t_list	*tmp;
+	char	*cmd_path;
+
+	node = cmds;
+	if (!cmds!)
+		return ;
+	while (tmp)
+	{
+		cmd_path = ft_path_finder((t_node *)tmp->data);
+		ft_executor(cmd_path, (t_node *)tmp->data);
+		tmp = tmp->next;
 	}
-	str = str;
 }

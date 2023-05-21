@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/21 16:21:46 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:51:30 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
+# include <unistd.h>
 # include <fcntl.h>
 
 //int g_status;

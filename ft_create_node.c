@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:00:19 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/21 16:22:34 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/21 16:42:15 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	ft_infile(char **sub_cmd)
 
 int	ft_outfile(char **sub_cmd)
 {
+	//sadsad
 	int fd;
 	int x;
 	int fd_k;

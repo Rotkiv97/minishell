@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:08:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 12:04:21 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/21 16:55:24 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,76 +14,18 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	//t_pront prompt;
 	char	*input;
 	char	**fin;
 
 	(void)ac;
 	(void)av;
-/* 	printf("\033[31m           ____                                                                               \n");
-	printf("\033[31m         ,'  , `.                                           ,---,                ,--,    ,--,\n");
-	printf("\033[31m      ,-+-,.' _ |  ,--,                 ,--,              ,--.' |              ,--.'|  ,--.'|\n");
-	printf("\033[31m   ,-+-. ;   , ||,--.'|         ,---, ,--.'|              |  |  :              |  | :  |  | :\n");
-	printf("\033[31m  ,--.'|'   |  ;||  |,      ,-+-. /  ||  |,      .--.--.  :  :  :              :  : '  :  : '\n");
-	printf("\033[37m |   |  ,', |  ':`--'_     ,--.'|'   |`--'_     /  /    ' :  |  |,--.   ,---.  |  ' |  |  ' |\n");
-	printf("\033[37m |   | /  | |  ||,' ,'|   |   |  ,'' |,' ,'|   |  :  /`./ |  :  '   |  /     \\ '  | |  '  | |\n");
-	printf("\033[37m '   | :  | :  |,'  | |   |   | /  | |'  | |   |  :  ;_   |  |   /' : /    /  ||  | :  |  | :\n");
-	printf("\033[37m ;   . |  ; |--' |  | :   |   | |  | ||  | :    \\  \\    `.'  :  | | |.    ' / |'  : |__'  : |__\n");
-	printf("\033[32m |   : |  | ,    '  : |__ |  s | |  |/ '  : |__   `----.   \\  |  ' | :'   ;   /||  | '.'|  | '.'|\n");
-	printf("\33[32m |   : '  |/     |  | '.'||   | |--'  |  | '.'| /  /`--'  /  :  :_:,''   |  / |;  :    ;  :    ;\n");
-	printf("\033[32m ;   | |`-'      ;  :    ;|   |/      ;  :    ;'--'.     /|  | ,'    |   :    ||  ,   /|  ,   / \n");
-	printf("\033[32m |   ;/          |  ,   / '---'       |  ,   /   `--'---' `--''       \\   \\  /  ---`-'  ---`-'\n");
-	printf("\033[32m '---'            ---`-'               ---`-'                          `----'\n"); */
 	printf("%d\n", getpid());
 	while (1)
 	{
 		input = readline("\033[34mminishell>\033[0m");
 		fin = final_split(input, envp);
-		//print_arrarr(fin);
 		ft_create_cmds(fin);
 		free_arrarr(fin);
 		add_history(input);
 	}
 }
-/* 	char	*s;
-	int		fd;
-	char	**split;
-
-	(void)ac;
-	(void)av;
-	fd = open("./test", O_RDONLY);
-	s = get_next_line(fd);
-	while (s)
-	{
-		printf("Numero stringhe of:%s>%d\n", s, count_strings(s));
-		split = split_quotes(s);
-		printf("\033[0;34mSimple Split\033[0m\n");
-		print_arrarr(split);
-		split = trim_quotes(split);
-		printf("\033[0;32mTrimmed split\033[0m\n");
-		print_arrarr(split);
-		printf("End split\n");
-		free(s);
-		s = get_next_line(fd);
-	} */
-	/* if (ac == 2)
-		printf("%s", getenv(av[1])); */
-/* 	char	*input;
-	char	**split;
-
-	(void)ac;
-	(void)av;
-	while (1)
-	{
-		input = readline("\033[32mminishell>\033[0m");
-		printf("Numero stringhe of:%s>%d\n", input, count_strings(input));
-		split = split_quotes(input);
-		printf("\033[0;34mSimple Split\033[0m\n");
-		print_arrarr(split);
-		split = trim_quotes(split);
-		printf("\033[0;32mTrimmed split\033[0m\n");
-		print_arrarr(split);
-		free(split);
-	} */
-
-/* "ciaoc comea va $PWD ciao $USER" */

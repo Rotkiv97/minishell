@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_main_execve.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 18:48:20 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/21 16:54:56 by dcolucci         ###   ########.fr       */
+/*   Created: 2023/05/21 16:41:19 by dcolucci          #+#    #+#             */
+/*   Updated: 2023/05/21 17:37:13 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 
 int	main(int ac, char **av, char **envp)
 {
+	pid_t	pid;
 
-	(void)ac;
-	(void)av;
-	(void)envp;
-	while (1)
-	{	
-		input = readline("\033[32mminishell>\033[0m");
-		print_arrarr(split_quotes(input));
-		add_history(input);
-		free_arrarr(str);
-		free(input);
+	pid = fork();
+	if (pid == 0)
+	{
+		execve("./minishell_test", av, envp);
 	}
-	str = str;
+	else if (pid)
+	{
+		waitpid(pid, 0, 0);
+	}
+	else if (pid < 0)
+	{
+		ft_quit("error", -1);
+	}
+	return (0);
 }
