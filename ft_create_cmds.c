@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:25:46 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 19:27:18 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:59:11 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_list	*ft_new_cmd(char **sub_spl)
 	node->full_cmd = ft_full_cmd(sub_spl);
 	node->cmds = ft_cmd(sub_spl);
 	new = ft_lstnew(node);
-	print_node(node, sub_spl);
+	//print_node(node, sub_spl);
 	return (new);
 }
 

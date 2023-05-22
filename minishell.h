@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/21 17:51:30 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:04:00 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 # include "libft/libft.h"
 # include "gnl/get_next_line_bonus.h"
 
+# include <fcntl.h>
 # include <limits.h>
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <stdlib.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
+# include <dirent.h>
 # include <unistd.h>
-# include <fcntl.h>
 
 //int g_status;
 
@@ -75,6 +76,9 @@ int		ft_outfile(char **sub_cmd);
 char	*ft_cmd(char **sub_cmd);
 char	**ft_full_cmd(char **sub_cmd);
 
+/* ft_exe.c */
+
+void	ft_exe(t_list *cmds, t_sh *shell);
 
 /*ft_gest_ambiental.c*/
 

@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:56:18 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/18 19:31:04 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:28:41 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,5 @@ char	**final_split(char *input, char **envp)
 	final = ft_gest_ambiental(final, envp);
 	final = split_cmd(final);
 	final = trim_quotes(final);
-	printf("\033[32m");
-	print_arrarr(final);
 	return (final);
 }
