@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/22 15:04:00 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:10:23 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_sh
 	t_list	*cmds;
 	char	**envp;
 	pid_t	pid;
+	int		stdin_fd;
 }t_sh;
 
 typedef struct s_node
@@ -78,7 +79,8 @@ char	**ft_full_cmd(char **sub_cmd);
 
 /* ft_exe.c */
 
-void	ft_exe(t_list *cmds, t_sh *shell);
+//void	ft_exe(t_list *cmds, t_sh *shell);
+void	ft_exe(t_sh *shell, t_list *cmd);
 
 /*ft_gest_ambiental.c*/
 
@@ -100,6 +102,11 @@ char	**trim_quotes(char **exp);
 /*final_split.c*/
 
 char	**final_split(char *input, char **envp);
+
+/*utils_cmd.c*/
+
+int		ft_out(t_node *node);
+int		ft_in(t_node *node);
 
 /*utils1.c*/
 
