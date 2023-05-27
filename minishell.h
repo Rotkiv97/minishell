@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/26 15:10:23 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:26:29 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ int		ft_outfile(char **sub_cmd);
 char	*ft_cmd(char **sub_cmd);
 char	**ft_full_cmd(char **sub_cmd);
 
+/*ft_builtins.c*/
+
+int		ft_builtins(t_node *node, t_sh *sh);
+
 /* ft_exe.c */
 
 //void	ft_exe(t_list *cmds, t_sh *shell);
@@ -124,6 +128,10 @@ char	*ft_strjoin_free(char *s1, char *s2);
 char	**ft_add_to_split(char **spl, char *str);
 char	**ft_join_split(char **spl1, char **spl2);
 char	**ft_subsplit(char **split, int x, int y);
+
+/*utils3.c*/
+
+char	*ft_truncate_eq(char *str);
 
 /*utils_print.c*/
 

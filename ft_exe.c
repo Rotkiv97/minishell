@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:57:26 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/26 19:45:13 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:30:45 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,10 @@ void	ft_executor(t_sh *shell, t_list *cmd, int **fd, int i)
 		else
 			dup2(fd[i - 1][0], node->infile);
 	}
-	execve(full_cmd, node->full_cmd, shell->envp);
+	if (ft_builtins(node, shell))
+		exit(0);
+	else
+		execve(full_cmd, node->full_cmd, shell->envp);
 }
 
 void	ft_exe(t_sh *shell, t_list *cmd)
