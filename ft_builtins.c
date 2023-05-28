@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:18:16 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/27 17:18:57 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:48:52 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_echo(t_node *node)
 			flag = 1;
 		else
 		{
-			printf("%s---\n", node->full_cmd[x]);
+			printf("%s", node->full_cmd[x]);
 			//flag = 0;
 		}
 		x++;
@@ -158,7 +158,7 @@ int	ft_export(t_node *node, t_sh *sh)
 			}
 			tmp = sh->envp;
 			sh->envp = ft_add_to_split(sh->envp, node->full_cmd[1]);
-			free(tmp);
+			//free(tmp);
 		}
 		else
 		{
@@ -166,6 +166,8 @@ int	ft_export(t_node *node, t_sh *sh)
 			while(sh->envp[x] != NULL)
 			{
 				trun_env = ft_truncate_eq(sh->envp[x]);
+				printf("%s", trun_env);
+				printf("\n");
 				if(!(ft_strncmp(trun, trun_env, ft_max(ft_strlen(trun), ft_strlen(trun_env)))))
 				{
 					tmp2 = sh->envp[x];

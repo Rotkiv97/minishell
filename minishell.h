@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/27 17:26:29 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:22:18 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_sh
 	char	**envp;
 	pid_t	pid;
 	int		stdin_fd;
+	int		stdout_fd;
 }t_sh;
 
 typedef struct s_node

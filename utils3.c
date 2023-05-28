@@ -18,7 +18,7 @@ char *ft_truncate_eq(char *str)
 	if (!str)
 		return (0);
 	if (!ft_strchr(str, '='))
-		return (0);
+		return (str);
 	x = 0;
 	while (str[x] && str[x] != '=')
 		x++;
