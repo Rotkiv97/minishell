@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 16:23:36 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/28 19:53:25 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/29 12:15:43 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ int	ft_heredoc(char *delimiter)
 	int		fd;
 	(void)delimiter;
 	signal(SIGQUIT,SIG_IGN);
-	printf("%s\n", delimiter);
-	fd = open("./tmp/heredoc", O_CREAT | O_TRUNC | O_WRONLY, S_IRWXU, 0666);
+	//printf("%s\n", delimiter);
+	fd = open("heredoc", O_CREAT | O_TRUNC | O_WRONLY, S_IRWXU);
 	while (1)
 	{
-		
 		inp_heredoc = readline("\033[33m🤟🍀🤟>\033[0m");
 		if(!inp_heredoc)
 		{
@@ -35,5 +34,7 @@ int	ft_heredoc(char *delimiter)
 		ft_putstr_fd(inp_heredoc, fd);
 		ft_putstr_fd("\n", fd);
 	}
+	close(fd);
+	fd = open("heredoc", O_RDONLY);
 	return (fd);
 }

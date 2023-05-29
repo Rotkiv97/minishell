@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/28 19:22:18 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/29 17:25:00 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
+# include <sys/ioctl.h>
 # include <dirent.h>
 # include <unistd.h>
-
-//int g_status;
-
+# include <signal.h>
 typedef struct s_sh
 {
 	t_list	*cmds;
@@ -133,6 +132,7 @@ char	**ft_subsplit(char **split, int x, int y);
 /*utils3.c*/
 
 char	*ft_truncate_eq(char *str);
+void	ft_setenv(char **envp, char *var, char *value);
 
 /*utils_print.c*/
 
@@ -148,5 +148,10 @@ char	**ft_gest_ambiental(char **av, char **envp);
 
 /*vik ft*/
 char	**ft_gest_ambiental(char **av, char **envp);
+
+/* ft_signals.c */
+
+void	ft_gest_sig_bash(int child);
+
 
 #endif

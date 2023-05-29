@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:57:26 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/28 19:52:30 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/29 17:18:23 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,10 @@ void	ft_prepare_redirection(t_sh *shell, t_list *cmd, int **fd, int i)
 	}
 }
 
-void	ft_reset_redirection(int fd_in, int fd_out)
+void	ft_reset_redirection(t_sh *shell)
 {
-	dup2(fd_in, STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
-	close(fd_in);
-	close(fd_out);
+	dup2(shell->stdin_fd, STDIN_FILENO);
+	dup2(shell->stdout_fd, STDOUT_FILENO);
 }
 
 void	ft_exe(t_sh *shell, t_list *cmd)
@@ -155,8 +153,6 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 	int		i;
 	char	*full_cmd;
 
-	shell->stdin_fd = dup(STDIN_FILENO);
-	shell->stdout_fd = dup(STDOUT_FILENO);
 	i = 0;
 	if (ft_lstsize(cmd) > 1)
 	{
@@ -172,16 +168,18 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 	while (cmd)
 	{
 		ft_prepare_redirection(shell, cmd, fd, i);
-		/* else
-			dup2(fd_out, STDOUT_FILENO); */
 		if (!ft_builtins((t_node *)cmd->content, shell))
 		{
 			full_cmd = ft_cmd_finder((t_node *)cmd->content, shell);
 			if (!full_cmd)
-				return ;
+				break ;
 			pid = fork();
 			if (pid == 0)
+			{
+				ft_gest_sig_bash(1);
 				execve(full_cmd, ((t_node *)(cmd->content))->full_cmd, shell->envp);
+				exit(0);
+			}
 			else
 			{
 				if(cmd->next)
@@ -197,5 +195,5 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 		cmd = cmd->next;
 		i++;
 	}
-	ft_reset_redirection(shell->stdin_fd, shell->stdout_fd);
+	ft_reset_redirection(shell);
 }
