@@ -6,11 +6,13 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:57:26 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/29 17:18:23 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:28:54 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int g_status;
 
 char	*ft_cmd_finder(t_node *node, t_sh *shell)
 {
@@ -149,6 +151,7 @@ void	ft_reset_redirection(t_sh *shell)
 void	ft_exe(t_sh *shell, t_list *cmd)
 {
 	pid_t	pid;
+	t_node	*node;
 	int		**fd;
 	int		i;
 	char	*full_cmd;
@@ -167,31 +170,50 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 	i = 0;
 	while (cmd)
 	{
+		node = (t_node *)cmd->content;
 		ft_prepare_redirection(shell, cmd, fd, i);
-		if (!ft_builtins((t_node *)cmd->content, shell))
+		if (node->infile == -1 || node->outfile == -1)
 		{
-			full_cmd = ft_cmd_finder((t_node *)cmd->content, shell);
-			if (!full_cmd)
-				break ;
-			pid = fork();
-			if (pid == 0)
+			if (node->infile == -1)
 			{
-				ft_gest_sig_bash(1);
-				execve(full_cmd, ((t_node *)(cmd->content))->full_cmd, shell->envp);
-				exit(0);
+				ft_putstr_fd("minishell : cannot open file ", shell->stdin_fd);
+				ft_putstr_fd(node->str_infile, shell->stdout_fd);
+				ft_putstr_fd("\n", shell->stdout_fd);
 			}
-			else
+			else if (node->outfile == -1)
 			{
-				if(cmd->next)
-				{
-					close(fd[i][1]);
-				} 
-				waitpid(pid, 0, 0);
+				ft_putstr_fd("minishell : cannot open file ", shell->stdout_fd);
+				ft_putstr_fd(node->str_outfile, shell->stdout_fd);
+				ft_putstr_fd("\n", shell->stdout_fd);
 			}
 		}
-		else if (cmd->next)
-			close(fd[i][1]);
-
+		else
+		{
+			if (!ft_builtins(node, shell))
+			{
+				full_cmd = ft_cmd_finder(node, shell);
+				if (!full_cmd)
+					break ;
+				pid = fork();
+				if (pid == 0)
+				{
+					execve(full_cmd, node->full_cmd, shell->envp);
+					exit(0);
+				}
+				else
+				{
+					signal(SIGINT, SIG_IGN);
+					signal(SIGQUIT, SIG_IGN);
+					if(cmd->next)
+					{
+						close(fd[i][1]);
+					} 
+					waitpid(pid, &g_status, 0);
+					printf("g_status : %d\n", g_status);
+					ft_gest_sig_bash(0);
+				}
+			}
+		}
 		cmd = cmd->next;
 		i++;
 	}

@@ -6,13 +6,13 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:00:19 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/21 16:42:15 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:08:52 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_infile(char **sub_cmd)
+int	ft_infile(char **sub_cmd, t_node *node)
 {
 	int fd_k;
 	int x;
@@ -20,6 +20,7 @@ int	ft_infile(char **sub_cmd)
 
 	x = 0;
 	fd = 0;
+	node->str_infile = 0;
 	while (sub_cmd[x])
 	{
 		if (in_set(sub_cmd[x][0], "<"))
@@ -34,13 +35,22 @@ int	ft_infile(char **sub_cmd)
 			else
 			{
 				fd_k = open(sub_cmd[x + 1], O_RDONLY);
-				if(fd_k == -1)
-					ft_quit(ft_strjoin("\033[31mCannot open ", sub_cmd[x + 1]), -1);
+				if (fd_k == -1)
+				{
+					if (node->str_infile)
+						free(node->str_infile);
+					node->str_infile = ft_strdup(sub_cmd[x + 1]);
+					return (-1);
+				}
+					//ft_quit(ft_strjoin("\033[31mCannot open ", sub_cmd[x + 1]), -1);
 				else
 				{
 					if(fd != 0)
 						close(fd);
 					fd = fd_k;
+					if (node->str_infile)
+						free(node->str_infile);
+					node->str_infile = ft_strdup(sub_cmd[x + 1]);
 				}
 				x = x + 1;
 			}
@@ -51,7 +61,7 @@ int	ft_infile(char **sub_cmd)
 	return (fd);
 }
 
-int	ft_outfile(char **sub_cmd)
+int	ft_outfile(char **sub_cmd, t_node *node)
 {
 	//sadsad
 	int fd;
@@ -60,6 +70,7 @@ int	ft_outfile(char **sub_cmd)
 
 	x = 0;
 	fd = 1;
+	node->str_outfile = 0;
 	while (sub_cmd[x])
 	{
 		if (sub_cmd[x][0] == '>')
@@ -68,12 +79,21 @@ int	ft_outfile(char **sub_cmd)
 			{
 				fd_k = open(sub_cmd[x + 2], O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
 				if (fd_k == -1)
-					ft_quit(ft_strjoin("Cannot open file ", sub_cmd[x + 2]), -2);
+				{
+					if (node->str_outfile)
+						free(node->str_outfile);
+					node->str_outfile = ft_strdup(sub_cmd[x + 2]);
+					return (-1);
+				}
+					//ft_quit(ft_strjoin("Cannot open file ", sub_cmd[x + 2]), -2);
 				else
 				{
 					if(fd != 1)
 						close(fd);
 					fd = fd_k;
+					if (node->str_outfile)
+						free(node->str_outfile);
+					node->str_outfile = ft_strdup(sub_cmd[x + 2]);
 				}
 				x = x + 2;
 			}
@@ -81,12 +101,21 @@ int	ft_outfile(char **sub_cmd)
 			{
 				fd_k = open(sub_cmd[x + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
 				if (fd_k == -1)
-					ft_quit(ft_strjoin("Cannot open file ", sub_cmd[x + 1]), -2);
+				{
+					if (node->str_outfile)
+						free(node->str_outfile);
+					node->str_outfile = ft_strdup(sub_cmd[x + 1]);
+					return (-1);
+				}
+					//ft_quit(ft_strjoin("Cannot open file ", sub_cmd[x + 1]), -2);
 				else
 				{
 					if(fd != 1)
 						close(fd);
 					fd = fd_k;
+					if (node->str_outfile)
+						free(node->str_outfile);
+					node->str_outfile = ft_strdup(sub_cmd[x + 1]);
 				}
 				x = x + 1;
 			}

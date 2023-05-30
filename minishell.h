@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/29 17:25:00 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:59:12 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ typedef struct s_node
 	char	**full_cmd;
 	char	*cmds;
 	int		infile;
+	char	*str_infile;
 	int		outfile;
+	char	*str_outfile;
 }t_node;
 
 /*ft_quit.c*/
@@ -72,8 +74,8 @@ t_list	**ft_create_cmds(char **full_cmds);
 
 /* ft_crate_node.c */
 
-int		ft_infile(char **sub_cmd);
-int		ft_outfile(char **sub_cmd);
+int		ft_infile(char **sub_cmd, t_node *node);
+int		ft_outfile(char **sub_cmd, t_node *node);
 char	*ft_cmd(char **sub_cmd);
 char	**ft_full_cmd(char **sub_cmd);
 

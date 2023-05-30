@@ -25,7 +25,7 @@ void	ft_sigint(int sig)
 {
 	if(sig == SIGINT)
 	{
-		g_status = 130;
+		g_status = 1;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -35,6 +35,7 @@ void	ft_sigint(int sig)
 void	ft_close(int sig)
 {
 	(void)sig;
+	printf("oi\n");
 	exit(0);
 }
 
@@ -45,9 +46,9 @@ void	ft_gest_sig_bash(int child)
 		signal(SIGINT, ft_sigint);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	else
+	/* else
 	{
-		printf("ENTRO_?");
+		printf("ENTRO_?\n");
 		signal(SIGINT, ft_close);
-	}
+	} */
 }
