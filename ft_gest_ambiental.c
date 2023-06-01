@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:13:45 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/06/01 15:57:49 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/01 20:46:17 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,24 +80,57 @@ char	*ft_av(char **envp, char *av, int i, int *flag)
 	return (av);
 }
 
-char	*ft_expander(char *av, char **envp)
+int		ft_next_quote_exp(char *s, int i)
+{
+	char	q;
+
+	if (in_set(s[i], "\'\""))
+	{
+		q = s[i];
+		while (s[i] && s[i] != q)
+			i++;
+	}
+	else
+	{
+		while (!in_set(s[i], "\'\""))
+			i++;
+	}
+	return (i);
+}
+
+char	*ft_expand(char *to_exp)
+{
+	
+}
+
+char	*ft_expander(char *exp, char **envp)
 {
 	int		i;
-	int		flag;
+	int		k;
+	char	*join;
+	char	*tmp;
+	char	*to_exp;
 
 	i = 0;
-	flag = 0;
-	while (av[i])
+	k = 0;
+	while (exp[i])
 	{
-		if (av[i] == '$')
+		k = ft_next_quote_exp(exp, i);
+		if (exp[i] != '\'')
 		{
-			av = ft_av(envp, av, i, &flag);
-			if (flag == 0)
-				i--;
+			to_exp = ft_substr(&exp[i], 0, k);
+			tmp = ft_expand(to_exp);
+			join = ft_strjoin(join, tmp);
 		}
-		i++;
+		else
+		{
+			tmp = (char *) malloc (sizoef(char) * (k + 1));
+			ft_strlcpy(tmp, &exp[i], k + 1);
+			join = ft_strjoin(join, tmp);
+			i = k + 1;
+		}
 	}
-	return (av);
+	return (exp);
 }
 
 /*
@@ -121,10 +154,7 @@ char	**ft_gest_ambiental(char **av, char **envp)
 		return (NULL);
 	while (av[x])
 	{
-		if (av[x][0] == '\"' || av[x][0] != '\'')
-		{
-			av[x] = ft_expander(av[x], envp);
-		}
+		av[x] = ft_expander(av[x], envp);
 		x++;
 	}
 	return (av);
