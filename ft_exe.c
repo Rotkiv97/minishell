@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:57:26 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/30 18:28:54 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/01 16:09:53 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,54 +46,11 @@ char	*ft_cmd_finder(t_node *node, t_sh *shell)
 		x++;
 	}
 	if (!env_PATH[x])
+	{
 		printf("\033[3;31m%s : command not found🐓🐔\n\033[0m", node->cmds);
+		g_status = 127;
+	}
 	return (0);
-}
-
-void	ft_exe2(t_sh *shell, t_list *cmd)
-{
-	int		fd[2];
-	int		pid;
-	t_node	*tmp;
-	char	*full_cmd;
-	int status;
-
-	while (cmd->next)
-	{
-		pipe(fd);
-		pid = fork();
-		if (pid == 0)
-		{
-			tmp = (t_node *) cmd->content;
-			full_cmd = ft_cmd_finder(tmp, shell);
-			if (!full_cmd)
-				exit(-1);
-			close(fd[0]);
-			dup2(fd[1], STDOUT_FILENO);
-			close(fd[1]);
-			execve(full_cmd, tmp->full_cmd, shell->envp);
-		}
-		else
-		{
-			close (fd[1]);
-			dup2(fd[0], STDIN_FILENO);
-			close(fd[0]);
-			waitpid(pid, &status, 0);
-			cmd = cmd->next;
-		}
-	}
-	pid = fork();
-	if (pid == 0)
-	{
-		tmp = (t_node *) cmd->content;
-		full_cmd = ft_cmd_finder(tmp, shell);
-		if (!full_cmd)
-			exit(-1);
-		execve(full_cmd, tmp->full_cmd, shell->envp);
-	}
-	else
-		waitpid(pid, &status, 0);
-	dup2(shell->stdin_fd, STDIN_FILENO);
 }
 
 void	ft_prepare_redirection(t_sh *shell, t_list *cmd, int **fd, int i)
@@ -101,13 +58,13 @@ void	ft_prepare_redirection(t_sh *shell, t_list *cmd, int **fd, int i)
 	t_node	*node;
 	
 	node = (t_node *)cmd->content;
-	if (cmd == shell->cmds && !cmd->next)	//one command
+	if (cmd == *(shell->cmds) && !cmd->next)	//one command
 	{
 		//printf("ONE\n");
 		dup2(node->infile, STDIN_FILENO);
 		dup2(node->outfile, STDOUT_FILENO);
 	}
-	else if (cmd == shell->cmds)			//first command
+	else if (cmd == *(shell->cmds))			//first command
 	{
 		//printf("FIRST\n");
 		if (ft_out(node))
@@ -155,8 +112,11 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 	int		**fd;
 	int		i;
 	char	*full_cmd;
+	int		status;
 
 	i = 0;
+	if (!cmd)
+		return ;
 	if (ft_lstsize(cmd) > 1)
 	{
 		fd = (int **) malloc (sizeof(int) * (ft_lstsize(cmd) - 1));
@@ -204,13 +164,12 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 				{
 					signal(SIGINT, SIG_IGN);
 					signal(SIGQUIT, SIG_IGN);
-					if(cmd->next)
-					{
+					if (cmd->next)
 						close(fd[i][1]);
-					} 
-					waitpid(pid, &g_status, 0);
-					printf("g_status : %d\n", g_status);
-					ft_gest_sig_bash(0);
+					waitpid(pid, &status, 0);
+					if (WIFEXITED(status))
+						g_status = WEXITSTATUS(status);
+					ft_gest_sig_bash();
 				}
 			}
 		}

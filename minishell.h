@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/30 17:59:12 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:33:45 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include <signal.h>
 typedef struct s_sh
 {
-	t_list	*cmds;
+	t_list	**cmds;
 	char	**envp;
 	pid_t	pid;
 	int		stdin_fd;
@@ -120,7 +120,7 @@ int		in_set(char c, char *s);
 char	*find_next_char(char *str, char *set, int i);
 char	**copy_arrarr(char **arr);
 int		compare_env(char *env, char *av, int k, int i);
-int	ft_max(int i, int j);
+int		ft_max(int i, int j);
 
 
 /*utils2.c*/
@@ -134,7 +134,7 @@ char	**ft_subsplit(char **split, int x, int y);
 /*utils3.c*/
 
 char	*ft_truncate_eq(char *str);
-void	ft_setenv(char **envp, char *var, char *value);
+void	ft_setenv(t_sh *shell, char *var, char *value);
 
 /*utils_print.c*/
 
@@ -153,7 +153,8 @@ char	**ft_gest_ambiental(char **av, char **envp);
 
 /* ft_signals.c */
 
-void	ft_gest_sig_bash(int child);
+void	ft_gest_sig_bash(void);
+void	ft_sigint(int sig);
 
 
 #endif

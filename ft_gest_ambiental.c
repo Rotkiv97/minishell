@@ -6,11 +6,13 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:13:45 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/05/29 15:12:09 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:57:49 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int g_status;
 
 char	*ft_sub_dollar(char *av, char *envp, int i, int k)
 {
@@ -57,11 +59,13 @@ char	*ft_av(char **envp, char *av, int i, int *flag)
 	int		x;
 	char	*separator;
 
-	separator = "<>\\/|+-.,;:~{}[]()&%%\"^'#@?*$ ";
+	separator = "<>\\/|+-.,;:~{}[]()&%%\"^'#@*$? ";
 	x = 0;
 	k = i + 1;
 	while (!ft_strchr(separator, av[k]) && av[k] != '\0')
 		k++;
+	if(av[1] == '?')
+		return (ft_strjoin(ft_itoa(g_status), &av[2]));
 	while (envp[x])
 	{
 		if (!compare_env(envp[x], &av[i + 1], k, i))

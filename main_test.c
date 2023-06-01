@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:08:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/29 17:09:38 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:12:35 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,24 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	shell.stdin_fd = dup(STDIN_FILENO);
 	shell.stdout_fd = dup(STDOUT_FILENO);
-	shell.envp = envp;
-	ft_gest_sig_bash(0);
+	shell.envp = copy_arrarr(envp);
+	ft_gest_sig_bash();
 	printf("%d\n", getpid());
 	while (1)
 	{
 		input = readline("\033[34mminishell>\033[0m");
 		if (!input)
 			break ;
-		else if (ft_strlen(input))
+		if (ft_strlen(input))
 		{
-			fin = final_split(input, envp);
-			shell.cmds = *ft_create_cmds(fin);
-			ft_exe(&shell, shell.cmds);
-			free_arrarr(fin);
-			add_history(input);
+			fin = final_split(input, shell.envp);
+			shell.cmds = ft_create_cmds(fin);
+			if (shell.cmds)
+			{
+				ft_exe(&shell, *(shell.cmds));
+				free_arrarr(fin);
+				add_history(input);
+			}
 		}
 	}
 }

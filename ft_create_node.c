@@ -6,11 +6,12 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:00:19 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/30 18:08:52 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:12:01 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+extern int g_status;
 
 int	ft_infile(char **sub_cmd, t_node *node)
 {
@@ -28,7 +29,7 @@ int	ft_infile(char **sub_cmd, t_node *node)
 			if(sub_cmd[x + 1][0] == '<')
 			{
 				if(fd != 0)
-						close(fd);
+					close(fd);
 				fd = ft_heredoc(sub_cmd[x + 2]);
 				x = x + 2;
 			}
@@ -42,7 +43,6 @@ int	ft_infile(char **sub_cmd, t_node *node)
 					node->str_infile = ft_strdup(sub_cmd[x + 1]);
 					return (-1);
 				}
-					//ft_quit(ft_strjoin("\033[31mCannot open ", sub_cmd[x + 1]), -1);
 				else
 				{
 					if(fd != 0)
