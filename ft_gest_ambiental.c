@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:13:45 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/06/01 20:46:17 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/02 19:40:06 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int g_status;
 
-char	*ft_sub_dollar(char *av, char *envp, int i, int k)
+ char	*ft_sub_dollar(char *av, char *envp, int i, int k)
 {
 	char	*ex;
 	char	*tmp;
@@ -53,31 +53,45 @@ char	*ft_rm_exp(char *av, int i, int k)
 	return (join);
 }
 
-char	*ft_av(char **envp, char *av, int i, int *flag)
+char	*ft_dollar(char **envp, char *to_exp)
 {
-	int		k;
-	int		x;
 	char	*separator;
+	char	*var;
+	char	*value;
+	int		i;
+	int		j;
 
+	i = 0;
+	j = 0;
 	separator = "<>\\/|+-.,;:~{}[]()&%%\"^'#@*$? ";
-	x = 0;
-	k = i + 1;
-	while (!ft_strchr(separator, av[k]) && av[k] != '\0')
-		k++;
-	if(av[1] == '?')
-		return (ft_strjoin(ft_itoa(g_status), &av[2]));
-	while (envp[x])
+	while (to_exp[i])
 	{
-		if (!compare_env(envp[x], &av[i + 1], k, i))
+		if (to_exp[i] == '$')
 		{
-			av = ft_sub_dollar(av, envp[x], i, k);
-			*flag = 1;
+			j = i + 1;
+			while (!ft_strchr(separator, to_exp[j]) && to_exp[j])
+				j++;
+			if (to_exp[j] == '?')
+			{
+			}
+			else if (j == 1)
+			{
+			}
+			else
+			{
+				var = (char *) malloc (sizeof (char) * (j - i + 1));
+				ft_strlcpy(var, &to_exp[i + 1], j);
+				value = ft_getenv(var, envp);
+				to_exp = ft_substitute_string(to_exp, value, i, j - i);
+			}
+			if (!to_exp[j])
+				break ;
+			i = j + 1;
 		}
-		x++;
+		else
+			i++;
 	}
-	if (*flag == 0)
-		av = ft_rm_exp(av, i, k);
-	return (av);
+	return (to_exp);
 }
 
 int		ft_next_quote_exp(char *s, int i)
@@ -86,52 +100,51 @@ int		ft_next_quote_exp(char *s, int i)
 
 	if (in_set(s[i], "\'\""))
 	{
-		q = s[i];
+		q = s[i++];
 		while (s[i] && s[i] != q)
 			i++;
 	}
 	else
-	{
-		while (!in_set(s[i], "\'\""))
+		while (s[i] && !in_set(s[i], "\'\""))
 			i++;
-	}
 	return (i);
-}
-
-char	*ft_expand(char *to_exp)
-{
-	
 }
 
 char	*ft_expander(char *exp, char **envp)
 {
-	int		i;
-	int		k;
 	char	*join;
 	char	*tmp;
-	char	*to_exp;
+	char	*expanded;
+	int 	x;
+	int 	k;
 
-	i = 0;
-	k = 0;
-	while (exp[i])
+	x = 0;
+	join = 0;
+	while (exp[x])
 	{
-		k = ft_next_quote_exp(exp, i);
-		if (exp[i] != '\'')
+		k = ft_next_quote_exp(exp, x);
+		if (exp[x] == '\'')
 		{
-			to_exp = ft_substr(&exp[i], 0, k);
-			tmp = ft_expand(to_exp);
-			join = ft_strjoin(join, tmp);
+			tmp = (char *) malloc (sizeof(char) * (k - x + 1));
+			ft_strlcpy(tmp, &exp[x], (k - x + 1));
+			join = ft_strjoin_null(join, tmp);
 		}
 		else
 		{
-			tmp = (char *) malloc (sizoef(char) * (k + 1));
-			ft_strlcpy(tmp, &exp[i], k + 1);
-			join = ft_strjoin(join, tmp);
-			i = k + 1;
+			tmp = (char *) malloc (sizeof(char) * (k - x + 2));
+			ft_strlcpy(tmp, &exp[x], (k - x + 2));
+			expanded = ft_dollar(envp, tmp);
+			join = ft_strjoin_null(join, expanded);
 		}
+		x = k + 1;
+		if (!exp[k])
+			break ;
+		if (!exp[k + 1])
+			break ;
 	}
-	return (exp);
+	return (join);
 }
+
 
 /*
 	Description:
@@ -145,17 +158,17 @@ char	*ft_expander(char *exp, char **envp)
 		are removed from the string.
 */
 
-char	**ft_gest_ambiental(char **av, char **envp)
+char	**ft_gest_ambiental(char **spl, char **envp)
 {
 	int	x;
 
 	x = 0;
-	if (av == NULL)
+	if (spl == NULL)
 		return (NULL);
-	while (av[x])
+	while (spl[x])
 	{
-		av[x] = ft_expander(av[x], envp);
+		spl[x] = ft_expander(spl[x], envp);
 		x++;
 	}
-	return (av);
+	return (spl);
 }

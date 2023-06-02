@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:08:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/31 19:12:35 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/02 19:41:08 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int ac, char **av, char **envp)
 	shell.stdout_fd = dup(STDOUT_FILENO);
 	shell.envp = copy_arrarr(envp);
 	ft_gest_sig_bash();
+	(void)fin;
 	printf("%d\n", getpid());
 	while (1)
 	{
