@@ -28,7 +28,7 @@ t_list	*ft_new_cmd(char **sub_spl)
 	node->full_cmd = ft_full_cmd(sub_spl);
 	node->cmds = ft_cmd(sub_spl);
 	new = ft_lstnew(node);
-	print_node(node, sub_spl);
+	//print_node(node, sub_spl);
 	return (new);
 }
 

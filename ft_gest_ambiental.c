@@ -74,9 +74,6 @@ char	*ft_dollar(char **envp, char *to_exp)
 			if (to_exp[j] == '?')
 			{
 			}
-			else if (j == 1)
-			{
-			}
 			else
 			{
 				var = (char *) malloc (sizeof (char) * (j - i + 1));
@@ -125,8 +122,8 @@ char	*ft_expander(char *exp, char **envp)
 		k = ft_next_quote_exp(exp, x);
 		if (exp[x] == '\'')
 		{
-			tmp = (char *) malloc (sizeof(char) * (k - x + 1));
-			ft_strlcpy(tmp, &exp[x], (k - x + 1));
+			tmp = (char *) malloc (sizeof(char) * (k - x + 2));
+			ft_strlcpy(tmp, &exp[x], (k - x + 2));
 			join = ft_strjoin_null(join, tmp);
 		}
 		else
