@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/02 16:33:35 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:29:41 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,9 @@ typedef struct s_node
 	char	*str_outfile;
 }t_node;
 
-/*ft_quit.c*/
-
-void	ft_quit(char *error, int quit);
-
 /*ft_check_syntax.c */
 
-void	ft_check_syntax(char **sub_cmd);
+int		ft_check_syntax(char **sub_cmd);
 int		ft_count_redirection(char **sub_cmd, char redir);
 
 /*split_command.c*/
@@ -81,7 +77,7 @@ char	**ft_full_cmd(char **sub_cmd);
 
 /*ft_builtins.c*/
 
-int		ft_builtins(t_node *node, t_sh *sh);
+int		ft_builtins(t_node *node, t_sh *sh, int *fd, t_list *cmd);
 
 /* ft_exe.c */
 

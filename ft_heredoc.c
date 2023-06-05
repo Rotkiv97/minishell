@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 16:23:36 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/31 17:28:35 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/05 12:20:14 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ int	ft_heredoc(char *delimiter)
 		if (!ft_strncmp(inp_heredoc, delimiter, \
 		ft_max(ft_strlen(inp_heredoc), ft_strlen(delimiter))))
 			break ;
-		if (i++ != 0)
+		if (i != 0)
 			ft_putstr_fd("\n", fd);
 		ft_putstr_fd(inp_heredoc, fd);
+		i++;
 	}
 	close(fd);
 	fd = open("heredoc", O_RDONLY);

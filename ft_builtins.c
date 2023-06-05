@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:18:16 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/01 15:49:41 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:30:11 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ int	ft_echo(t_node *node)
 	while(node->full_cmd[x])
 	{
 		if (node->full_cmd[x + 1])
-			printf("%s ", node->full_cmd[x++]);
+		{
+			ft_putstr_fd(node->full_cmd[x++], STDOUT_FILENO);
+			ft_putstr_fd(" ", STDOUT_FILENO);
+		}	//printf("%s ", node->full_cmd[x++]);
 		else
-			printf("%s", node->full_cmd[x++]);
-	}
+			ft_putstr_fd(node->full_cmd[x++], STDOUT_FILENO);
+			//printf("%s", node->full_cmd[x++]);
+		}
 	if(flag == 0)
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	g_status = 0;
 	return (1);
 }
@@ -187,29 +191,33 @@ int	ft_unset(t_node *node, t_sh *sh)
 	return (1);
 }
 
-int	ft_builtins(t_node *node, t_sh *sh)
+int	ft_builtins(t_node *node, t_sh *sh, int *fd, t_list *cmd)
 {
 	int x;
+	int	builtin;
 
 	x = 0;
-	if (!node->cmds)
+	builtin = 0;
+	if (!node->cmds || !node->full_cmd)
 		return (0);
 	if(node->full_cmd[x])
 	{
 		if (!(ft_strncmp(node->full_cmd[x], "echo", ft_max(ft_strlen(node->full_cmd[x]), ft_strlen("echo")))))
-			return (ft_echo(node));
+			builtin = (ft_echo(node));
 		else if (!(ft_strncmp(node->full_cmd[x], "pwd", ft_max(ft_strlen(node->full_cmd[x]), ft_strlen("pwd")))))
-			return(ft_pwd());
+			builtin = (ft_pwd());
 		else if (!(ft_strncmp(node->full_cmd[x], "exit", ft_max(ft_strlen(node->full_cmd[x]), ft_strlen("exit")))))
 			exit(0);
 		else if (!(ft_strncmp(node->full_cmd[x], "env", ft_max(ft_strlen(node->full_cmd[x]), ft_strlen("env")))))
-			return(ft_env(sh, node));
+			builtin = (ft_env(sh, node));
 		else if (!(ft_strncmp(node->full_cmd[x], "cd", ft_max(ft_strlen(node->full_cmd[x]), ft_strlen("cd")))))
-			return(ft_cd(node, sh));
+			builtin = (ft_cd(node, sh));
 		else if (!(ft_strncmp(node->full_cmd[x], "export", ft_max(ft_strlen(node->full_cmd[x]), ft_strlen("export")))))
-			return(ft_export(node, sh));
+			builtin = (ft_export(node, sh));
 		else if (!(ft_strncmp(node->full_cmd[x], "unset", ft_max(ft_strlen(node->full_cmd[x]), ft_strlen("unset")))))
-			return(ft_unset(node, sh));
+			builtin = (ft_unset(node, sh));
 	}
-	return(0);
+	if (cmd->next)
+		close(fd[1]);
+	return(builtin);
 }

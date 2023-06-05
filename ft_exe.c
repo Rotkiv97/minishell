@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:57:26 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/02 12:41:55 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/05 19:29:08 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,14 @@ void	ft_prepare_redirection(t_sh *shell, t_list *cmd, int **fd, int i)
 	node = (t_node *)cmd->content;
 	if (cmd == *(shell->cmds) && !cmd->next)	//one command
 	{
+		//ft_putstr_fd("ONE\n", shell->stdout_fd);
 		//printf("ONE\n");
 		dup2(node->infile, STDIN_FILENO);
 		dup2(node->outfile, STDOUT_FILENO);
 	}
 	else if (cmd == *(shell->cmds))			//first command
 	{
+		//ft_putstr_fd("FIRST\n", shell->stdout_fd);
 		//printf("FIRST\n");
 		if (ft_out(node))
 			dup2(node->outfile, STDOUT_FILENO);
@@ -75,6 +77,8 @@ void	ft_prepare_redirection(t_sh *shell, t_list *cmd, int **fd, int i)
 	}
 	else if (!cmd->next)					//last command
 	{
+
+		//ft_putstr_fd("LAST\n", shell->stdout_fd);
 		//printf("LAST\n");
 		if (ft_in(node))
 			dup2(node->infile, STDIN_FILENO);
@@ -87,6 +91,7 @@ void	ft_prepare_redirection(t_sh *shell, t_list *cmd, int **fd, int i)
 	}
 	else									// middle command
 	{
+		//ft_putstr_fd("MIDDLE\n", shell->stdout_fd);
 		//printf("MIDDLE\n");
 		if (ft_out(node))
 			dup2(node->outfile, STDOUT_FILENO);
@@ -105,6 +110,20 @@ void	ft_reset_redirection(t_sh *shell)
 	dup2(shell->stdout_fd, STDOUT_FILENO);
 }
 
+void	ft_set_gstatus(int sig)
+{
+	if (sig == SIGINT)
+		g_status = 130;
+}
+
+void	ft_close_redirection(t_node *node)
+{
+	if (node->infile != STDIN_FILENO)
+		close(node->infile);
+	if (node->outfile != STDOUT_FILENO)
+		close(node->outfile);
+}
+
 void	ft_exe(t_sh *shell, t_list *cmd)
 {
 	pid_t	pid;
@@ -117,13 +136,18 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 	i = 0;
 	if (!cmd)
 		return ;
-	if (ft_lstsize(cmd) > 1)
+	int size = ft_lstsize(cmd);
+	if (size > 1)
 	{
-		fd = (int **) malloc (sizeof(int) * (ft_lstsize(cmd) - 1));
-		while (i < ft_lstsize(cmd) - 1)
+		fd = (int **) malloc (sizeof(int *) * (size - 1));
+		while (i < size - 1)
 		{
 			fd[i] = (int *) malloc (sizeof(int) * 2);
-			pipe(fd[i]);
+			if (pipe(fd[i]) == -1)
+			{
+				ft_putstr_fd("\033[33mERROR CREATING PIPE\n\033", STDERR_FILENO);
+				return;
+			}
 			i++;
 		}
 	}
@@ -136,23 +160,26 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 		{
 			if (node->infile == -1)
 			{
-				ft_putstr_fd("minishell : cannot open file ", shell->stdin_fd);
-				ft_putstr_fd(node->str_infile, shell->stdout_fd);
-				ft_putstr_fd("\n", shell->stdout_fd);
+				ft_putstr_fd("minishell : cannot open file ", STDERR_FILENO);
+				ft_putstr_fd(node->str_infile, STDERR_FILENO);
+				ft_putstr_fd("\n", STDERR_FILENO);
 			}
 			else if (node->outfile == -1)
 			{
-				ft_putstr_fd("minishell : cannot open file ", shell->stdout_fd);
-				ft_putstr_fd(node->str_outfile, shell->stdout_fd);
-				ft_putstr_fd("\n", shell->stdout_fd);
+				ft_putstr_fd("minishell : cannot open file ", STDERR_FILENO);
+				ft_putstr_fd(node->str_outfile, STDERR_FILENO);
+				ft_putstr_fd("\n", STDERR_FILENO);
 			}
+		}
+		else if (!node->cmds && (ft_in(node) || ft_out(node)))
+		{
 		}
 		else
 		{
-			if (!ft_builtins(node, shell))
+			if (!ft_builtins(node, shell, fd[i], cmd))
 			{
 				full_cmd = ft_cmd_finder(node, shell);
-				if (!full_cmd)
+				if (!full_cmd && (node->infile || node->outfile  ))
 					break ;
 				pid = fork();
 				if (pid == 0)
@@ -162,17 +189,23 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 				}
 				else
 				{
-					signal(SIGINT, SIG_IGN);
+					signal(SIGINT, ft_set_gstatus);
 					signal(SIGQUIT, SIG_IGN);
 					if (cmd->next)
 						close(fd[i][1]);
 					waitpid(pid, &status, 0);
+					if (g_status == 130)
+					{
+						ft_gest_sig_bash();
+						return ;
+					}
 					if (WIFEXITED(status))
 						g_status = WEXITSTATUS(status);
 					ft_gest_sig_bash();
 				}
 			}
 		}
+		ft_close_redirection((t_node *)cmd->content);
 		cmd = cmd->next;
 		i++;
 	}

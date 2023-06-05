@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:25:46 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/02 19:56:28 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/05 18:59:58 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_list	*ft_new_cmd(char **sub_spl)
 	t_node	*node;
 	t_list	*new;
 
-	ft_check_syntax(sub_spl);
+	if (ft_check_syntax(sub_spl) == -1)
+		return (0);
 	node = (t_node *) malloc (sizeof(t_node));
 	node->infile = ft_infile(sub_spl, node);
 	if (g_status == 130)
@@ -48,7 +49,7 @@ t_list	**ft_create_cmds(char **final)
 		return (NULL);
 	while (final[x])
 	{
-		if (final[x][0] == '|')
+		if (final[x][0] == '|' && ft_strlen(final[x]) == 1)
 		{
 			sub_split = ft_subsplit(final, y, x);
 			node = ft_new_cmd(sub_split);

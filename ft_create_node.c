@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:00:19 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/05/31 17:12:01 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/05 18:41:33 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_infile(char **sub_cmd, t_node *node)
 	node->str_infile = 0;
 	while (sub_cmd[x])
 	{
-		if (in_set(sub_cmd[x][0], "<"))
+		if (in_set(sub_cmd[x][0], "<") && ft_strlen(sub_cmd[x]) == 1)
 		{
 			if(sub_cmd[x + 1][0] == '<')
 			{
@@ -73,7 +73,7 @@ int	ft_outfile(char **sub_cmd, t_node *node)
 	node->str_outfile = 0;
 	while (sub_cmd[x])
 	{
-		if (sub_cmd[x][0] == '>')
+		if (sub_cmd[x][0] == '>' && ft_strlen(sub_cmd[x]) == 1)
 		{
 			if (sub_cmd[x + 1][0] == '>')
 			{
@@ -85,7 +85,6 @@ int	ft_outfile(char **sub_cmd, t_node *node)
 					node->str_outfile = ft_strdup(sub_cmd[x + 2]);
 					return (-1);
 				}
-					//ft_quit(ft_strjoin("Cannot open file ", sub_cmd[x + 2]), -2);
 				else
 				{
 					if(fd != 1)
@@ -107,7 +106,6 @@ int	ft_outfile(char **sub_cmd, t_node *node)
 					node->str_outfile = ft_strdup(sub_cmd[x + 1]);
 					return (-1);
 				}
-					//ft_quit(ft_strjoin("Cannot open file ", sub_cmd[x + 1]), -2);
 				else
 				{
 					if(fd != 1)
@@ -126,6 +124,22 @@ int	ft_outfile(char **sub_cmd, t_node *node)
 	return (fd);
 }
 
+char	*ft_restore_neg(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+	{
+		if (s[i] < 0)
+			s[i] = -s[i];
+		i++;
+	}
+	return (s);
+}
+
 char	*ft_cmd(char **sub_cmd)
 {
 	int		i;
@@ -135,7 +149,12 @@ char	*ft_cmd(char **sub_cmd)
 	cmd = 0;
 	while (sub_cmd[i])
 	{
-		if (!in_set(sub_cmd[i][0], "<>"))
+		if (!in_set(sub_cmd[i][0], "<>|"))
+		{
+			cmd = (ft_strdup(sub_cmd[i]));
+			return (cmd);
+		}
+		else if (in_set(sub_cmd[i][0], "<>|") && ft_strlen(sub_cmd[i]) != 1)
 		{
 			cmd = (ft_strdup(sub_cmd[i]));
 			return (cmd);
@@ -150,6 +169,7 @@ char	*ft_cmd(char **sub_cmd)
 				i++;
 		}
 	}
+	cmd = ft_restore_neg(cmd);
 	return (cmd);
 }
 
@@ -162,7 +182,12 @@ char	**ft_full_cmd(char **sub_cmd)
 	full_cmd = 0;
 	while (sub_cmd[i])
 	{
-		if (!in_set(sub_cmd[i][0], "<>"))
+		if (!in_set(sub_cmd[i][0], "<>|"))
+		{
+			full_cmd = ft_add_to_split(full_cmd, sub_cmd[i]);
+			i++;
+		}
+		else if (in_set(sub_cmd[i][0], "<>|") && ft_strlen(sub_cmd[i]) != 1)
 		{
 			full_cmd = ft_add_to_split(full_cmd, sub_cmd[i]);
 			i++;
@@ -175,6 +200,15 @@ char	**ft_full_cmd(char **sub_cmd)
 				break ;
 			else
 				i++;
+		}
+	}
+	i = 0;
+	if (full_cmd)
+	{
+		while(full_cmd[i])
+		{
+			full_cmd[i] = ft_restore_neg(full_cmd[i]);
+			i++;
 		}
 	}
 	return (full_cmd);

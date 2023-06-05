@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:13:45 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/06/02 19:40:06 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/05 14:44:52 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,23 @@ char	*ft_dollar(char **envp, char *to_exp)
 
 	i = 0;
 	j = 0;
-	separator = "<>\\/|+-.,;:~{}[]()&%%\"^'#@*$? ";
+	separator = "<>\\/|+-.,;:~{}[]()&%%\"^'#@*$= ";
 	while (to_exp[i])
 	{
 		if (to_exp[i] == '$')
 		{
-			j = i + 1;
+			if (!ft_strchr(separator, to_exp[i + 1]))
+				j = i + 1;
+			else
+				j = i;
 			while (!ft_strchr(separator, to_exp[j]) && to_exp[j])
 				j++;
-			if (to_exp[j] == '?')
-			{
-			}
+			if (to_exp[i + 1] == '?')
+				to_exp = ft_substitute_string(to_exp, ft_itoa(g_status), i, 2);
 			else
 			{
 				var = (char *) malloc (sizeof (char) * (j - i + 1));
-				ft_strlcpy(var, &to_exp[i + 1], j);
+				ft_strlcpy(var, &to_exp[i + 1], (j - i));
 				value = ft_getenv(var, envp);
 				to_exp = ft_substitute_string(to_exp, value, i, j - i);
 			}
@@ -95,6 +97,7 @@ int		ft_next_quote_exp(char *s, int i)
 {
 	char	q;
 
+	q = 0;
 	if (in_set(s[i], "\'\""))
 	{
 		q = s[i++];
@@ -102,8 +105,12 @@ int		ft_next_quote_exp(char *s, int i)
 			i++;
 	}
 	else
+	{
 		while (s[i] && !in_set(s[i], "\'\""))
 			i++;
+		if (in_set(s[i], "\'\""))
+			i--;
+	}
 	return (i);
 }
 
@@ -149,7 +156,7 @@ char	*ft_expander(char *exp, char **envp)
 		of av starting with double quotes (") or not starting with single quotes
 		(');
 	Return value:
-		It returns a double char pointer with the $variable replaced 
+		It returns a double char pointer with the $variable replaced
 		by its corresponding environment variable.
 		If no variable is found the $xxx character (not in separators set) 
 		are removed from the string.

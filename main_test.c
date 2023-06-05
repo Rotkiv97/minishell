@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:08:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/02 19:41:08 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/05 12:17:14 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	main(int ac, char **av, char **envp)
 			{
 				ft_exe(&shell, *(shell.cmds));
 				free_arrarr(fin);
-				add_history(input);
 			}
+			add_history(input);
 		}
 	}
 }
