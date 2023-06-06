@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:13:45 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/06/06 12:27:58 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:10:32 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char	*ft_dollar(char **envp, char *to_exp)
 	char	*separator;
 	char	*var;
 	char	*value;
+	char	*itoa;
+	char	*tmp_to_exp;
 	int		i;
 	int		j;
 
@@ -75,13 +77,22 @@ char	*ft_dollar(char **envp, char *to_exp)
 			while (!ft_strchr(separator, to_exp[j]) && to_exp[j])
 				j++;
 			if (to_exp[i + 1] == '?')
-				to_exp = ft_substitute_string(to_exp, ft_itoa(g_status), i, 2);
+			{
+				itoa = ft_itoa(g_status);
+				to_exp = ft_substitute_string(to_exp, itoa, i, 2);
+				free(itoa);
+				free(tmp_to_exp);
+			}
 			else
 			{
 				var = (char *) malloc (sizeof (char) * (j - i + 1));
 				ft_strlcpy(var, &to_exp[i + 1], (j - i));
 				value = ft_getenv(var, envp);
+				tmp_to_exp = to_exp;
 				to_exp = ft_substitute_string(to_exp, value, i, j - i);
+				free(tmp_to_exp);
+				ft_safe_free(value);
+				ft_safe_free(var);
 			}
 			if (!to_exp[j])
 				break ;
@@ -144,7 +155,7 @@ char	*ft_expander(char *exp, char **envp)
 			expanded = ft_dollar(envp, tmp);
 			tmp_join = join;
 			join = ft_strjoin_null(join, expanded);
-			ft_safe_free(tmp);
+			//ft_safe_free(tmp);
 			ft_safe_free(expanded);
 			ft_safe_free(tmp_join);
 		}

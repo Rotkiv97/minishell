@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:44 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/06 13:22:43 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/06 16:34:55 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,5 @@ void	ft_free_shell(t_sh *shell)
 void	ft_safe_free(void *p)
 {
 	if (p)
-	{
 		free(p);
-	}
 }
