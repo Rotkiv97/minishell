@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:00:19 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/05 18:41:33 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/06 13:08:56 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ char	**ft_full_cmd(char **sub_cmd)
 {
 	int		i;
 	char	**full_cmd;
+	char	**tmp;
 
 	i = 0;
 	full_cmd = 0;
@@ -184,12 +185,16 @@ char	**ft_full_cmd(char **sub_cmd)
 	{
 		if (!in_set(sub_cmd[i][0], "<>|"))
 		{
+			tmp = full_cmd;
 			full_cmd = ft_add_to_split(full_cmd, sub_cmd[i]);
+			free_arrarr(tmp);
 			i++;
 		}
 		else if (in_set(sub_cmd[i][0], "<>|") && ft_strlen(sub_cmd[i]) != 1)
 		{
+			tmp = full_cmd;
 			full_cmd = ft_add_to_split(full_cmd, sub_cmd[i]);
+			free_arrarr(tmp);
 			i++;
 		}
 		else

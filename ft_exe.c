@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:57:26 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/05 19:29:08 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/06 14:09:31 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	*ft_cmd_finder(t_node *node, t_sh *shell)
 		else
 		{
 			printf("%s : no such file or directory\n", node->cmds);
+			g_status = 126;
 			return (0);
 		}
 	}
@@ -41,7 +42,11 @@ char	*ft_cmd_finder(t_node *node, t_sh *shell)
 	{
 		full_cmd = ft_strjoin(env_PATH[x], cmd);
 		if (!access(full_cmd, F_OK | X_OK))
+		{
+			free_arrarr(env_PATH);
+			free(cmd);
 			return (full_cmd);
+		}
 		free(full_cmd);
 		x++;
 	}
@@ -50,6 +55,8 @@ char	*ft_cmd_finder(t_node *node, t_sh *shell)
 		printf("\033[3;31m%s : command not found🐓🐔\n\033[0m", node->cmds);
 		g_status = 127;
 	}
+	free_arrarr(env_PATH);
+	free(cmd);
 	return (0);
 }
 
@@ -60,15 +67,11 @@ void	ft_prepare_redirection(t_sh *shell, t_list *cmd, int **fd, int i)
 	node = (t_node *)cmd->content;
 	if (cmd == *(shell->cmds) && !cmd->next)	//one command
 	{
-		//ft_putstr_fd("ONE\n", shell->stdout_fd);
-		//printf("ONE\n");
 		dup2(node->infile, STDIN_FILENO);
 		dup2(node->outfile, STDOUT_FILENO);
 	}
 	else if (cmd == *(shell->cmds))			//first command
 	{
-		//ft_putstr_fd("FIRST\n", shell->stdout_fd);
-		//printf("FIRST\n");
 		if (ft_out(node))
 			dup2(node->outfile, STDOUT_FILENO);
 		else
@@ -77,22 +80,16 @@ void	ft_prepare_redirection(t_sh *shell, t_list *cmd, int **fd, int i)
 	}
 	else if (!cmd->next)					//last command
 	{
-
-		//ft_putstr_fd("LAST\n", shell->stdout_fd);
-		//printf("LAST\n");
 		if (ft_in(node))
 			dup2(node->infile, STDIN_FILENO);
 		else
 			dup2(fd[i - 1][0], node->infile);
 		dup2(shell->stdout_fd, STDOUT_FILENO);
 		dup2(node->outfile, STDOUT_FILENO);
-		//dup2(node->outfile, STDOUT_FILENO);
 		
 	}
 	else									// middle command
 	{
-		//ft_putstr_fd("MIDDLE\n", shell->stdout_fd);
-		//printf("MIDDLE\n");
 		if (ft_out(node))
 			dup2(node->outfile, STDOUT_FILENO);
 		else
@@ -132,11 +129,12 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 	int		i;
 	char	*full_cmd;
 	int		status;
-
+	int 	size;
+	
+	size = ft_lstsize(cmd);
 	i = 0;
 	if (!cmd)
 		return ;
-	int size = ft_lstsize(cmd);
 	if (size > 1)
 	{
 		fd = (int **) malloc (sizeof(int *) * (size - 1));
@@ -170,6 +168,7 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 				ft_putstr_fd(node->str_outfile, STDERR_FILENO);
 				ft_putstr_fd("\n", STDERR_FILENO);
 			}
+			g_status = 1;
 		}
 		else if (!node->cmds && (ft_in(node) || ft_out(node)))
 		{
@@ -179,8 +178,12 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 			if (!ft_builtins(node, shell, fd[i], cmd))
 			{
 				full_cmd = ft_cmd_finder(node, shell);
-				if (!full_cmd && (node->infile || node->outfile  ))
-					break ;
+				if (!full_cmd && (!ft_in(node) && !ft_out(node)))
+					{
+						g_status = 2;
+						ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", shell->stdout_fd);
+						break ;
+					}
 				pid = fork();
 				if (pid == 0)
 				{
@@ -202,6 +205,7 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 					if (WIFEXITED(status))
 						g_status = WEXITSTATUS(status);
 					ft_gest_sig_bash();
+					free(full_cmd);
 				}
 			}
 		}
@@ -209,5 +213,13 @@ void	ft_exe(t_sh *shell, t_list *cmd)
 		cmd = cmd->next;
 		i++;
 	}
+	i = 0;
+	while (i < size - 1)
+	{
+		close(fd[i][1]);
+		close(fd[i][0]);
+		free(fd[i++]);
+	}
+	free(fd);
 	ft_reset_redirection(shell);
 }

@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/05 16:29:41 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:18:36 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ char	**copy_arrarr(char **arr);
 int		compare_env(char *env, char *av, int k, int i);
 int		ft_max(int i, int j);
 
-
 /*utils2.c*/
 
 int		ft_splitlen(char **split);
@@ -143,9 +142,10 @@ void	print_node(t_node *node, char **sub_spl);
 /*utils1_free.c*/
 
 void	free_arrarr(char **mat);
-
-/*vik ft*/
-char	**ft_gest_ambiental(char **av, char **envp);
+void	ft_free_shell(t_sh *shell);
+void	ft_free_node(t_node *node);
+void	ft_free_list(t_list *lst);
+void	ft_safe_free(void *p);
 
 /*vik ft*/
 char	**ft_gest_ambiental(char **av, char **envp);

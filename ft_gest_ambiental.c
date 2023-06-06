@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:13:45 by vguidoni          #+#    #+#             */
-/*   Updated: 2023/06/05 14:44:52 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:27:58 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int		ft_next_quote_exp(char *s, int i)
 char	*ft_expander(char *exp, char **envp)
 {
 	char	*join;
+	char	*tmp_join;
 	char	*tmp;
 	char	*expanded;
 	int 	x;
@@ -131,14 +132,21 @@ char	*ft_expander(char *exp, char **envp)
 		{
 			tmp = (char *) malloc (sizeof(char) * (k - x + 2));
 			ft_strlcpy(tmp, &exp[x], (k - x + 2));
+			tmp_join = join;
 			join = ft_strjoin_null(join, tmp);
+			ft_safe_free(tmp);
+			ft_safe_free(tmp_join);
 		}
 		else
 		{
 			tmp = (char *) malloc (sizeof(char) * (k - x + 2));
 			ft_strlcpy(tmp, &exp[x], (k - x + 2));
 			expanded = ft_dollar(envp, tmp);
+			tmp_join = join;
 			join = ft_strjoin_null(join, expanded);
+			ft_safe_free(tmp);
+			ft_safe_free(expanded);
+			ft_safe_free(tmp_join);
 		}
 		x = k + 1;
 		if (!exp[k])
@@ -164,14 +172,17 @@ char	*ft_expander(char *exp, char **envp)
 
 char	**ft_gest_ambiental(char **spl, char **envp)
 {
-	int	x;
+	int		x;
+	char	*tmp;
 
 	x = 0;
 	if (spl == NULL)
 		return (NULL);
 	while (spl[x])
 	{
+		tmp = spl[x];
 		spl[x] = ft_expander(spl[x], envp);
+		free(tmp);
 		x++;
 	}
 	return (spl);

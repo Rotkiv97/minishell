@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:04:53 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/05 15:20:28 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/06 13:21:29 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*delete_quotes(char *s)
 	int		k;
 	char	*tmp;
 	char	*join;
+	char	*tmp_join;
 
 	j = 0;
 	k = 0;
@@ -51,7 +52,10 @@ char	*delete_quotes(char *s)
 			k = ft_next_index_trim(s, j);
 			tmp = malloc(sizeof(char) * (k - j));
 			ft_strlcpy(tmp, &s[j + 1], k - j);
+			tmp_join = join;
 			join = ft_strjoin_free(join, tmp);
+			ft_safe_free(tmp);
+			ft_safe_free(tmp_join);
 			j = k + 1;
 		}
 		else
@@ -61,7 +65,10 @@ char	*delete_quotes(char *s)
 				k++;
 			tmp = malloc(sizeof(char) * (k - j + 1));
 			ft_strlcpy(tmp, &s[j], k - j + 1);
+			tmp_join = join;
 			join = ft_strjoin_free(join, tmp);
+			ft_safe_free(tmp);
+			ft_safe_free(tmp_join);
 			j = k;
 		}
 	}
@@ -88,7 +95,8 @@ char	*ft_safe_quotes(char *cmd)
 
 char	**trim_quotes(char **cmd)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = -1;
 	if (!cmd)
@@ -96,7 +104,9 @@ char	**trim_quotes(char **cmd)
 	while (cmd[++i])
 	{
 		cmd[i] = ft_safe_quotes(cmd[i]);
+		tmp = cmd[i];
 		cmd[i] = delete_quotes(cmd[i]);
+		free(tmp);
 	}
 	return (cmd);
 }
