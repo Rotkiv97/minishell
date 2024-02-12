@@ -21,3 +21,9 @@ Minishell is a BASH shell implementation written in C, adhering to strict guidel
 - A Makefile must be included, supporting compilation with specified flags and rules.
 - Submission should include required files such as Makefile, header files, and C source files.
 - The project should adhere strictly to the specified functionalities and avoid unnecessary additions.
+
+## Contributors
+
+- The project was carried out by the following:
+      -[dcolucci](github.com/Colucci-Damiano)
+      -[vguidoni](github.com/Rotkiv97)
