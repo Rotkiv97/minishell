@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:39:55 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/06 12:18:36 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/11 17:00:51 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include "gnl/get_next_line_bonus.h"
 
+# include <dirent.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <stdio.h>
@@ -29,13 +30,20 @@
 # include <dirent.h>
 # include <unistd.h>
 # include <signal.h>
+
 typedef struct s_sh
 {
+	char	**final_split;
 	t_list	**cmds;
 	char	**envp;
 	pid_t	pid;
 	int		stdin_fd;
 	int		stdout_fd;
+	char	**tmp;
+	char	*tmp_join;
+	char	*tmp_env;
+	char	*join;
+	int		x;
 }t_sh;
 
 typedef struct s_node
@@ -66,7 +74,7 @@ char	**split_quotes(char *s);
 
 /*ft_create_cmds.c*/
 
-t_list	**ft_create_cmds(char **full_cmds);
+t_list	**ft_create_cmds(char **full_cmds, t_sh *shell);
 
 /* ft_crate_node.c */
 
@@ -77,21 +85,48 @@ char	**ft_full_cmd(char **sub_cmd);
 
 /*ft_builtins.c*/
 
-int		ft_builtins(t_node *node, t_sh *sh, int *fd, t_list *cmd);
+int		ft_builtins(t_list *cmd, t_sh *sh, int **fd, int i);
+
+/*ft_builtins_00.c*/
+
+int		ft_cd(t_node *node, t_sh *shell);
+int		ft_env(t_sh *sh, t_node *node);
+int		ft_pwd(void);
+int		ft_echo(t_node *node);
+
+/*ft_builtins_01.c*/
+
+int		ft_export(t_node *node, t_sh *sh);
 
 /* ft_exe.c */
 
-//void	ft_exe(t_list *cmds, t_sh *shell);
 void	ft_exe(t_sh *shell, t_list *cmd);
+
+/*ft_exe_00.c*/
+
+char	*ft_cmd_finder(t_node *node, t_sh *shell);
+
+/*ft_exe_01.c*/
+
+void	ft_prepare_redirection(t_sh *shell, t_list *cmd, int **fd, int i);
+
+/*ft_exe_02.c*/
+
+int		**ft_pipe_array(int n_pipes);
+void	ft_close_array_pipes(int size, int **fd);
 
 /*ft_gest_ambiental.c*/
 
 char	**ft_gest_ambiental(char **spl, char **envp);
 
+/*ft_gest_ambiental_00.c*/
+
+char	*ft_expander_00(int x, char **envp, char *join, char *exp);
+int		ft_next_quote_exp(char *s, int i);
+
 /*ft_heredoc.c*/
 
-int	ft_heredoc(char *delimiter);
-
+int		ft_heredoc(char *delimiter);
 
 /*expand_vars.c*/
 
@@ -131,8 +166,13 @@ char	**ft_subsplit(char **split, int x, int y);
 char	*ft_truncate_eq(char *str);
 void	ft_setenv(t_sh *shell, char *var, char *value);
 char	*ft_strjoin_null(char *s1, char *s2);
-char	*ft_substitute_string(char *str, char *str_in, int index, int size);
+void	ft_quit_shell(t_sh *shell);
 char	*ft_getenv(char *var, char **envp);
+
+/*utils4.c*/
+
+int		ft_check_matched_quotes(char *s);
+char	*ft_restore_neg(char *s);
 
 /*utils_print.c*/
 
@@ -154,6 +194,6 @@ char	**ft_gest_ambiental(char **av, char **envp);
 
 void	ft_gest_sig_bash(void);
 void	ft_sigint(int sig);
-
+void	ft_set_gstatus(int sig);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dcolucci <dcolucci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 21:01:11 by dcolucci          #+#    #+#             */
-/*   Updated: 2023/06/06 14:35:01 by dcolucci         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:51:33 by dcolucci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,19 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	return (join);
 }
 
-int	ft_splitlen(char **split)
+void	ft_join_split_00(char **cmd, char **line_spl, char **join)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	if (!split)
-		return (0);
-	while (split[i])
-		i++;
-	return (i);
+	j = 0;
+	while (cmd[i])
+		join[j++] = ft_strdup(cmd[i++]);
+	i = 0;
+	while (line_spl[i])
+		join[j++] = ft_strdup(line_spl[i++]);
+	join[j] = 0;
 }
 
 char	**ft_join_split(char **cmd, char **line_spl)
@@ -52,23 +55,18 @@ char	**ft_join_split(char **cmd, char **line_spl)
 
 	i = 0;
 	j = 0;
-	if (!cmd)
+	if (!cmd && !line_spl)
+		return (0);
+	if (!cmd && line_spl)
 		return (copy_arrarr(line_spl));
+	if (cmd && !line_spl)
+		return (copy_arrarr(cmd));
 	while (cmd[i])
 		i++;
 	while (line_spl[j])
 		j++;
 	join = (char **) malloc (sizeof(char *) * (i + j + 1));
-	i = 0;
-	j = 0;
-	while (cmd[i])
-		join[j++] = ft_strdup(cmd[i++]);
-	i = 0;
-	while (line_spl[i])
-		join[j++] = ft_strdup(line_spl[i++]);
-	join[j] = 0;
-	//free_arrarr(cmd);
-	//free_arrarr(line_spl);
+	ft_join_split_00(cmd, line_spl, join);
 	return (join);
 }
 
