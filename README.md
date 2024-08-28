@@ -27,6 +27,8 @@ For a more complete overview take a look at the [subject](./minishell.en.subject
 1. Clone the repository:
 ```bash
  git clone https://github.com/Coluyanson/minishell.git
+```
+```bash
  git clone https://github.com/Rotkiv97/minishell.git
 ```
 
