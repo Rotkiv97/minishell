@@ -1,8 +1,47 @@
-# Minishell Project Presentation (42 school)
 
-## Project Overview
+# Minishell
+As beautiful as a shell
 
-Minishell is a BASH shell implementation written in C, adhering to strict guidelines and best practices. It aims to replicate the functionalities of a basic shell environment, providing users with a command prompt, history management, command execution, and various built-in functionalities.
+## Table of Contents
+- [Overview](#overview)
+- [Requirements of the project](#requirements-and-guidelines-of-42-school)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Key Features](#key-features)
+- [Authors](#authors)
+
+## Overview
+Minishell is a BASH shell implementation written in C, adhering to strict guidelines and best practices of [42 school](https://42firenze.it/). It aims to replicate the functionalities of a basic shell environment, providing users with a command prompt, history management, command execution, and various built-in functionalities.
+
+## Requirements and Guidelines of 42 school
+
+- The project must be written in C and comply with the provided Norm standards.
+- Memory management is crucial, and all dynamically allocated memory must be properly freed to prevent memory leaks.
+- A Makefile must be included, supporting compilation with specified flags and rules.
+- Submission should include required files such as Makefile, header files, and C source files.
+- The project should adhere strictly to the specified functionalities and avoid unnecessary additions.
+
+For a more complete overview take a look at the [subject](./minishell.en.subject.pdf)
+
+## Installation
+1. Clone the repository:
+```bash
+ git clone https://github.com/Coluyanson/minishell.git
+```
+
+2. Install dependencies:
+```bash
+ sudo apt-get install libreadline-dev
+```
+
+## Usage
+To run the project, use the following command:
+```bash
+cd minishell
+make
+./minishell
+```
+![Example](./docs/gif/simple_usage.gif)
 
 ## Key Features
 
@@ -14,16 +53,10 @@ Minishell is a BASH shell implementation written in C, adhering to strict guidel
 - **Environment Variables**: Minishell expands environment variables, allowing users to access and manipulate system environment settings.
 - **Built-in Commands**: Minishell supports essential built-in commands such as `echo`, `cd`, `pwd`, `export`, `unset`, `env`, and `exit`.
 
-## Requirements and Guidelines of 42 school
+## Authors
 
-- The project must be written in C and comply with the provided Norm standards.
-- Memory management is crucial, and all dynamically allocated memory must be properly freed to prevent memory leaks.
-- A Makefile must be included, supporting compilation with specified flags and rules.
-- Submission should include required files such as Makefile, header files, and C source files.
-- The project should adhere strictly to the specified functionalities and avoid unnecessary additions.
+- [dcolucci](https://github.com/Coluyanson)
+- [vguidoni](https://github.com/Rotkiv97)
 
-## Contributors
 
-- The project was carried out by the following:
-      -[dcolucci](github.com/Colucci-Damiano)
-      -[vguidoni](github.com/Rotkiv97)
+![Build Status](https://travis-ci.org/yourusername/yourproject.svg?branch=main)
