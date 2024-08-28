@@ -24,6 +24,6 @@ Minishell is a BASH shell implementation written in C, adhering to strict guidel
 
 ## Contributors
 
-- The project was carried out by the following:  
+- The project was carried out by the following:
       -[dcolucci](github.com/Colucci-Damiano)
       -[vguidoni](github.com/Rotkiv97)
