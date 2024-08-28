@@ -57,6 +57,3 @@ make
 
 - [dcolucci](https://github.com/Coluyanson)
 - [vguidoni](https://github.com/Rotkiv97)
-
-
-![Build Status](https://travis-ci.org/yourusername/yourproject.svg?branch=main)
